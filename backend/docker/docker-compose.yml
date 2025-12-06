@@ -3,11 +3,11 @@ version: '3.8'
 services:
   postgres:
     image: postgres:15
-    container_name: eonet_postgres
+    container_name: eonet_multiuser_postgres
     environment:
-      POSTGRES_DB: eonet_app
-      POSTGRES_USER: [YOUR-DB-USER] # TODO: Mit tatsächlichem Usernamen ersetzen
-      POSTGRES_PASSWORD: [YOUR-DB-PASSWORD] # TODO: Mit tatsächlichem Passwort ersetzen
+      POSTGRES_DB: eonet_multiuser_app
+      POSTGRES_USER: eonet_user
+      POSTGRES_PASSWORD: eonet_password
     ports:
       - "5432:5432"
     volumes:
