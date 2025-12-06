@@ -1,0 +1,1 @@
+import '@testing-library/jest-dom'; // Importiert die jest-dom Matcher für Vitest
