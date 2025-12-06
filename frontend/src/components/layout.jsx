@@ -21,7 +21,7 @@ const Layout = () => {
 
             {/* Footer mit dynamisch aktualisiertem Copyright-Hinweis */}
             <footer className='layout-footer'>
-                <p>© {currentYear} Natascha Blumer</p>
+                <p>© {currentYear} Natascha Blumer & Sascha Ritter</p>
             </footer>
         </div>
     );
