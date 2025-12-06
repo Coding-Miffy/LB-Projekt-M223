@@ -2,6 +2,7 @@
 import { useNavigate } from 'react-router-dom';
 // Importiere die wiederverwendbare Button-Komponente
 import Button from '../components/button';
+import AuthTest from '../components/auth-test';
 
 const Home = () => {
     // Initialisiere den Hook zum Navigieren innerhalb der App
@@ -19,8 +20,9 @@ const Home = () => {
             <h1 className='home-heading'>Earth Natural Events Tracker</h1>
 
             {/* Button zum Wechseln zur Seite mit den Live Events */}
+            <AuthTest />
             <Button
-                text={'Check it out'} // Text auf dem Button
+                text={'Proceed without login'} // Text auf dem Button
                 onButtonClick={handleClick} // Klick-Handler
                 className={'home-button'} // CSS-Klasse für Styling
             />
