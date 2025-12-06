@@ -2,6 +2,7 @@ package com.wiss.backend.mapper;
 
 import com.wiss.backend.dto.EventDTO;
 import com.wiss.backend.dto.EventFormDTO;
+import com.wiss.backend.entity.AppUser;
 import com.wiss.backend.entity.Event;
 
 import java.util.List;
@@ -78,6 +79,10 @@ public class EventMapper {
             return null;
         }
 
+        AppUser creator = entity.getCreatedBy();
+        String creatorUsername = (creator != null) ? creator.getUsername() : "Unknown";
+        Long creatorId = (creator != null) ? creator.getId() : null;
+
         return new EventFormDTO(
                 entity.getId(),
                 entity.getTitle(),
@@ -85,7 +90,9 @@ public class EventMapper {
                 entity.getCategory(),
                 entity.getLongitude(),
                 entity.getLatitude(),
-                entity.getStatus()
+                entity.getStatus(),
+                creatorUsername,
+                creatorId
         );
     }
 
@@ -112,7 +119,8 @@ public class EventMapper {
                 dto.getCategory(),
                 dto.getLongitude(),
                 dto.getLatitude(),
-                dto.getStatus()
+                dto.getStatus(),
+                null
         );
     }
 

@@ -1,5 +1,6 @@
 package com.wiss.backend.dto;
 
+import com.wiss.backend.entity.AppUser;
 import com.wiss.backend.model.EventCategory;
 import com.wiss.backend.model.EventStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -104,6 +105,20 @@ public class EventFormDTO {
     private EventStatus status;
 
     /**
+     * Benutzername der Ersteller:in
+     * @see #getCreatorUsername()
+     */
+    @Schema(description = "Benutzername der Ersteller:in", example = "john_doe")
+    private String creatorUsername;
+
+    /**
+     * ID der Ersteller:in
+     * @see #getCreatorId()
+     */
+    @Schema(description = "ID der Ersteller:in", example = "42")
+    private Long creatorId;
+
+    /**
      * Leerer Konstruktor (benötigt für JSON-Deserialisierung).
      */
     public EventFormDTO() {}
@@ -117,14 +132,18 @@ public class EventFormDTO {
      * @param longitude Längengrad
      * @param latitude  Breitengrad
      * @param status    Status des Events
+     * @param creatorUsername Benutzername der Ersteller:in
+     * @param creatorId ID der Ersteller:in
      */
-    public EventFormDTO(String title, LocalDate date, EventCategory category, Double longitude, Double latitude, EventStatus status) {
+    public EventFormDTO(String title, LocalDate date, EventCategory category, Double longitude, Double latitude, EventStatus status, String creatorUsername, Long creatorId) {
         this.title = title;
         this.date = date;
         this.category = category;
         this.longitude = longitude;
         this.latitude = latitude;
         this.status = status;
+        this.creatorUsername = creatorUsername;
+        this.creatorId = creatorId;
     }
 
     /**
@@ -137,8 +156,10 @@ public class EventFormDTO {
      * @param longitude Längengrad
      * @param latitude  Breitengrad
      * @param status    Status des Events
+     * @param creatorUsername Benutzername der Ersteller:in
+     * @param creatorId ID der Ersteller:in
      */
-    public EventFormDTO(Long id, String title, LocalDate date, EventCategory category, Double longitude, Double latitude, EventStatus status) {
+    public EventFormDTO(Long id, String title, LocalDate date, EventCategory category, Double longitude, Double latitude, EventStatus status, String creatorUsername, Long creatorId) {
         this.id = id;
         this.title = title;
         this.date = date;
@@ -146,6 +167,8 @@ public class EventFormDTO {
         this.longitude = longitude;
         this.latitude = latitude;
         this.status = status;
+        this.creatorUsername = creatorUsername;
+        this.creatorId = creatorId;
     }
 
     // Getter & Setter
@@ -170,6 +193,12 @@ public class EventFormDTO {
     public EventStatus getStatus() { return status; }
     public void setStatus(EventStatus status) { this.status = status; }
 
+    public String getCreatorUsername() { return creatorUsername; }
+    public void setCreatorUsername(String creatorUsername) { this.creatorUsername = creatorUsername; }
+
+    public Long getCreatorId() { return creatorId; }
+    public void setCreatorId(Long creatorId) { this.creatorId = creatorId; }
+
     /**
      * Konvertiert dieses Formular-DTO zu einem {@link EventDTO}, z. B. zur Weitergabe an den Service.
      *
@@ -189,23 +218,6 @@ public class EventFormDTO {
     }
 
     /**
-     * Erstellt ein {@link EventFormDTO} aus einem bestehenden {@link EventDTO}, z. B. für das Bearbeitungsformular.
-     *
-     * @param eventDTO Ursprüngliches {@link EventDTO}
-     * @return Neues {@link EventFormDTO} mit denselben Werten
-     */
-    public static EventFormDTO fromEventDTO(EventDTO eventDTO) {
-        return new EventFormDTO(
-                eventDTO.getTitle(),
-                eventDTO.getDate(),
-                eventDTO.getCategory(),
-                eventDTO.getLongitude(),
-                eventDTO.getLatitude(),
-                eventDTO.getStatus()
-        );
-    }
-
-    /**
      * Gibt eine lesbare Textdarstellung des DTOs zurück (z. B. für Logging-Zwecke).
      *
      * @return String-Repräsentation des Events
@@ -219,6 +231,8 @@ public class EventFormDTO {
                 ", longitude='" + longitude + "'" +
                 ", latitude='" + latitude + "'" +
                 ", status='" + status + "'" +
+                ", creator='" + creatorUsername + "'" +
+                ", creatorId='" + creatorId + "'" +
                 "}";
     }
 }
