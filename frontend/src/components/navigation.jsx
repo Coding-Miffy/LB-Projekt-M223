@@ -3,6 +3,7 @@
 import { NavLink } from "react-router-dom";
 import { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
+import Login from "../pages/Login";
 
 // Definiert die Navigations-Komponente
 const Navigation = () => {
@@ -33,6 +34,25 @@ const Navigation = () => {
             <NavLink to='/manage-events' className={({ isActive }) => isActive ? 'active' : ''}>
                 Manage Events
             </NavLink>
+
+            {/* Login/Logout Anzeige */}
+            {!isAuthenticated ? (
+                <NavLink to='/login' className={({ isActive }) => isActive ? 'active' : ''}>
+                    Login
+                </NavLink>
+            ) : (
+                <span style={{
+                    marginLeft: '20px',
+                    padding: '5px 10px',
+                    background: '#28a745',
+                    color: 'white',
+                    borderRadius: '4px',
+                    fontSize: '14px'
+                }}>
+                    ✅ Logged In
+                </span>
+            )}
+
             
             {/* User-Anzeige */}
             {isAuthenticated && (

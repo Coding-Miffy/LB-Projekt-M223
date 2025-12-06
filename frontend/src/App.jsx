@@ -8,6 +8,7 @@ import Archive from './pages/Archive';
 import EventsManager from './pages/EventsManager';
 import NotFoundPage from './pages/NotFoundPage';
 import Layout from './components/layout';
+import Login from './pages/Login';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
         <Route path='/live-events' element={<LiveEvents />} />
         <Route path='/archive' element={<Archive />} />
         <Route path='/manage-events' element={<EventsManager />} />
+        <Route path='/login' element={<Login />} />
         <Route path='*' element={<NotFoundPage />} />
       </Route>
     </Routes>
