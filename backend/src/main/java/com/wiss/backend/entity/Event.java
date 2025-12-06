@@ -86,6 +86,14 @@ public class Event {
     private EventStatus status;
 
     /**
+     * User, der das Event erfasst hat.
+     * @see #getCreatedBy()
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by_user_id")
+    private AppUser createdBy;
+
+    /**
      * Leerer Standard-Konstruktor (für JPA erforderlich).
      */
     public Event() {}
@@ -99,14 +107,16 @@ public class Event {
      * @param longitude Längengrad.
      * @param latitude  Breitengrad.
      * @param status    Status (open/closed).
+     * @param createdBy Ersteller:in.
      */
-    public Event(String title, LocalDate date, EventCategory category, Double longitude, Double latitude, EventStatus status) {
+    public Event(String title, LocalDate date, EventCategory category, Double longitude, Double latitude, EventStatus status, AppUser createdBy) {
         this.title = title;
         this.date = date;
         this.category = category;
         this.longitude = longitude;
         this.latitude = latitude;
         this.status = status;
+        this.createdBy = createdBy;
     }
 
     /**
@@ -119,8 +129,9 @@ public class Event {
      * @param longitude Längengrad.
      * @param latitude  Breitengrad.
      * @param status    Status (open/closed).
+     * @param createdBy Ersteller:in.
      */
-    public Event(Long id, String title, LocalDate date, EventCategory category, Double longitude, Double latitude, EventStatus status) {
+    public Event(Long id, String title, LocalDate date, EventCategory category, Double longitude, Double latitude, EventStatus status, AppUser createdBy) {
         this.id = id;
         this.title = title;
         this.date = date;
@@ -128,6 +139,7 @@ public class Event {
         this.longitude = longitude;
         this.latitude = latitude;
         this.status = status;
+        this.createdBy = createdBy;
     }
 
     // Getter & Setter
@@ -175,4 +187,7 @@ public class Event {
     public void setStatus(EventStatus status) {
         this.status = status;
     }
+
+    public AppUser getCreatedBy() { return createdBy; }
+    public void setCreatedBy(AppUser createdBy) { this.createdBy = createdBy; }
 }
