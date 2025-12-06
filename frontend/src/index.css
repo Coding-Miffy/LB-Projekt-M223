@@ -277,6 +277,7 @@ button:hover,
   flex-direction: column;
   align-items: flex-start;
   gap: 0.5rem;
+  color: #111;
 }
 
 .form-input {
@@ -448,6 +449,15 @@ button:hover,
   margin-bottom: 1.5rem;
   text-align: center;
   color: #282c34;
+}
+
+/* Increase spacing between stacked form groups on auth pages
+   This only affects the vertical space between one field block and the
+   next inside forms that use the `.auth-form` wrapper (e.g. Login).
+   It does not change the internal gap inside each `.form-group`. */
+.auth-form .form-group + .form-group,
+.auth-form .form-group + .form-submit {
+  margin-top: 1rem;
 }
 
 .auth-links {

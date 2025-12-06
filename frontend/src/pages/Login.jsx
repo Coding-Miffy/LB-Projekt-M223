@@ -4,7 +4,7 @@ import LoginForm from "../components/login-form";
 const Login = () => {
   const handleLogin = (loginData) => {
     console.log("Login Daten:", loginData);
-    // TODO: Später mit AuthContext und API verbinden (Nachmittag!)
+    // TODO: Später mit AuthContext und API verbinden
     alert(`Login-Versuch mit: ${loginData.usernameOrEmail}`);
   };
 
@@ -22,7 +22,7 @@ const Login = () => {
         <div style={{ 
           marginTop: '20px', 
           padding: '15px', 
-          backgroundColor: '#e7f3ff',
+          backgroundColor: '#3b5972ff',
           borderRadius: '4px',
           fontSize: '14px'
         }}>
@@ -30,12 +30,12 @@ const Login = () => {
           <br />
           <strong>Admin:</strong><br />
           Username: admin<br />
-          Email: admin@quiz.com<br />
+          Email: admin@eonet.com<br />
           Passwort: admin123<br />
           <br />
           <strong>Normaler User:</strong><br />
           Username: user<br />
-          Email: user@quiz.com<br />
+          Email: user@eonet.com<br />
           Passwort: user123
         </div>
       </div>
