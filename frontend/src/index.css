@@ -119,6 +119,16 @@ h3 {
   background-color: rgba(255, 255, 255, 0.4);
 }
 
+/* Home button group spacing */
+.home-actions {
+  display: flex;
+  gap: 1rem; /* space between buttons */
+  margin-top: 1rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap; /* wrap on small screens */
+}
+
 /* ===== Filters & Forms ===== */
 .filters {
   display: flex;
