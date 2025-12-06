@@ -1,23 +1,16 @@
-import { useState } from "react";
 import LoginForm from "../components/login-form";
 
 const Login = () => {
-  const handleLogin = (loginData) => {
-    console.log("Login Daten:", loginData);
-    // TODO: Später mit AuthContext und API verbinden
-    alert(`Login-Versuch mit: ${loginData.usernameOrEmail}`);
-  };
-
   return (
     <div className="auth-page">
       <div className="auth-container">
-        <LoginForm onLogin={handleLogin} />
-        
+        <LoginForm />
+
         <div className="auth-links">
           <p>Noch kein Account?</p>
-          <p>Registrierung kommt später!</p>
+          <p>Registrierung kommt (vielleicht) später!</p>
         </div>
-        
+
         {/* Test Credentials Hinweis */}
         <div style={{ 
           marginTop: '20px', 
@@ -42,5 +35,5 @@ const Login = () => {
     </div>
   );
 }
-// Exportiert die Login-Seite für die Verwendung in der App
+
 export default Login;

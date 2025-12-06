@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
+import { useNavigate } from 'react-router-dom';
 import Button from "./button";
+import { AuthContext } from '../contexts/AuthContext';
 
 const LoginForm = ({ onLogin }) => {
   // ==========================================
@@ -15,17 +17,21 @@ const LoginForm = ({ onLogin }) => {
   const [passwordError, setPasswordError] = useState("");
 
   // ==========================================
-  // STATE: Loading
+  // CONTEXT: Auth
   // ==========================================
-  const [isLoading, setIsLoading] = useState(false);
+  const { login, isLoading, isAuthenticated } = useContext(AuthContext);
+
+  // Local flag to know we triggered a login and should watch for success
+  const [pendingLogin, setPendingLogin] = useState(false);
+  const navigate = useNavigate();
 
   // ==========================================
   // VALIDATION FUNKTIONEN
   // ==========================================
   
   /**
-   * Username oder Email validieren (flexible!)
-   * Backend prüft ob Username oder Email - wir prüfen nur Grundsätzliches
+   * Username oder Email validieren
+   * Backend prüft ob Username oder Email - Frontend prüft nur Grundsätzliches
    */
   const validateUsernameOrEmail = (value) => {
     if (!value.trim()) {
@@ -88,21 +94,18 @@ const LoginForm = ({ onLogin }) => {
       return;
     }
 
-    setIsLoading(true);
-
-    // Login-Daten an Parent weitergeben
-    const loginData = {
-      usernameOrEmail: usernameOrEmail,
-      password: password,
-    };
-
-    // Parent-Funktion aufrufen (kommt später von AuthContext)
-    if (onLogin) {
-      onLogin(loginData);
-    }
-
-    setIsLoading(false);
+    // Call AuthContext login (simulated async inside context)
+    login(usernameOrEmail, password);
+    setPendingLogin(true);
   };
+
+  // Redirect to home when auth succeeded
+  useEffect(() => {
+    if (pendingLogin && isAuthenticated) {
+      setPendingLogin(false);
+      navigate('/live-events');
+    }
+  }, [pendingLogin, isAuthenticated, navigate]);
 
   // ==========================================
   // HELPER: CSS Klasse für Input
@@ -131,7 +134,7 @@ const LoginForm = ({ onLogin }) => {
           id="usernameOrEmail"
           value={usernameOrEmail}
           onChange={handleUsernameOrEmailChange}
-          placeholder="admin oder admin@quiz.com"
+          placeholder="admin oder admin@eonet.com"
           className={getInputClassName(usernameOrEmailError, usernameOrEmail)}
           disabled={isLoading}
         />
@@ -163,7 +166,7 @@ const LoginForm = ({ onLogin }) => {
       <div className="form-submit">
         <Button
           text={isLoading ? "Lädt..." : "Einloggen"}
-          onAnswerClick={handleSubmit}
+          onButtonClick={handleSubmit}
           disabled={isLoading}
           className="submit-button"
         />
