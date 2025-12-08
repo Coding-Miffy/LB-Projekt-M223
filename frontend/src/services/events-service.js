@@ -1,14 +1,7 @@
-import axios from "axios";
+import apiClient from '../services/api-client';
 
-const API_BASE_URL = "http://localhost:8080/api/events";
-
-// HTTP-Client mit Timeout konfigurieren
-const apiClient = axios.create({
-    timeout: 10000, // 10 Sekunden Timeout
-    headers: {
-        "Content-Type": "application/json",
-    },
-});
+// Base path for events endpoints (relative to api-client baseURL)
+const API_EVENTS_BASE = '/events';
 
 // Events laden
 export const getEvents = async (amount = 5, category = null) => {
@@ -16,15 +9,15 @@ export const getEvents = async (amount = 5, category = null) => {
         console.log(`Lade ${amount} Events für Kategorie:`, category);
 
         // Schritt 1: URL zusammenbauen
-        let url = `${API_BASE_URL}/random?amount=${amount}`;
+        let path = `${API_EVENTS_BASE}/random?amount=${amount}`;
         if (category) {
-            url = `${API_BASE_URL}/random?category=${category}&limit=${amount}`;
+            path = `${API_EVENTS_BASE}/random?category=${encodeURIComponent(category)}&limit=${amount}`;
         }
-        console.log("EONET URL:", url);
+        console.log("Events API path:", path);
 
-        // Schritt 2: API-Aufruf
-        const response = await apiClient.get(url);
-        console.log("EONET Response:", response);
+        // Schritt 2: API-Aufruf via shared apiClient
+        const response = await apiClient.get(path);
+        console.log("Events Response:", response);
 
         // Schritt 3: Events extrahieren
         const data = response.data;
@@ -48,8 +41,8 @@ export const getEvents = async (amount = 5, category = null) => {
 // Alle Events laden
 export const getAllEvents = async () => {
     try {
-        const url = `${API_BASE_URL}/all`;
-        const response = await apiClient.get(url);
+        const path = `${API_EVENTS_BASE}/all`;
+        const response = await apiClient.get(path);
         const data = response.data;
         const events = data.results || data; // fallback if API returns array directly
         if (!events || events.length === 0) {
@@ -65,8 +58,8 @@ export const getAllEvents = async () => {
 
 export const createEvent = async (eventData) => {
     try {
-        const url = `${API_BASE_URL}/create`;
-        const response = await apiClient.post(url, eventData);
+        const path = `${API_EVENTS_BASE}/create`;
+        const response = await apiClient.post(path, eventData);
         return response.data;
     } catch (error) {
         console.error("Fehler beim Erstellen des Events:", error);
@@ -77,8 +70,8 @@ export const createEvent = async (eventData) => {
 
 export const updateEvent = async (eventId, updatedData) => {
     try {
-        const url = `${API_BASE_URL}/${eventId}/update`;
-        const response = await apiClient.put(url, updatedData);
+        const path = `${API_EVENTS_BASE}/${eventId}/update`;
+        const response = await apiClient.put(path, updatedData);
         return response.data;
     } catch (error) {
         console.error("Fehler beim Aktualisieren des Events:", error);
@@ -89,8 +82,8 @@ export const updateEvent = async (eventId, updatedData) => {
 
 export const deleteEvent = async (eventId) => {
     try {
-        const url = `${API_BASE_URL}/${eventId}`;
-        await apiClient.delete(url);
+        const path = `${API_EVENTS_BASE}/${eventId}`;
+        await apiClient.delete(path);
         console.log("Event erfolgreich gelöscht: ", eventId);
         return eventId;
     } catch (error) {
@@ -103,8 +96,8 @@ export const deleteEvent = async (eventId) => {
 // Für Map
 export const getOpenEventsByCategory = async (category) => {
     try {
-        const url = `${API_BASE_URL}/filter?status=open&category=${category}`;
-        const response = await apiClient.get(url);
+        const path = `${API_EVENTS_BASE}/filter?status=open&category=${encodeURIComponent(category)}`;
+        const response = await apiClient.get(path);
         return response.data;
     } catch (error) {
         console.error("Fehler beim Abrufen der Events: ", error);
@@ -122,8 +115,8 @@ export const getClosedEventsByCategory = async (category, startDate, endDate) =>
         if (startDate) params.append('start', startDate);
         if (endDate) params.append('end', endDate);
 
-        const url = `${API_BASE_URL}/filter?${params.toString()}`;
-        const response = await apiClient.get(url);
+        const path = `${API_EVENTS_BASE}/filter?${params.toString()}`;
+        const response = await apiClient.get(path);
         return response.data;
     } catch (error) {
         console.error("Fehler beim Abrufen der Events: ", error);

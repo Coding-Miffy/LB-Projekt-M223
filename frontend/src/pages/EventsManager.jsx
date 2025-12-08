@@ -4,7 +4,7 @@ import CustomEventForm from '../components/create-event-form';
 
 import CustomEventCard from '../components/create-event-card';
 
-import { getAllEvents, createEvent, updateEvent, deleteEvent } from '../utils/java-api';
+import { getAllEvents, createEvent, updateEvent, deleteEvent } from '../services/events-service';
 
 const CustomEvents = () => {
     // Zustand für alle gespeicherten Events

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 // Importiere Karten-Komponente für die Darstellung der Events
 import Map from '../components/map';
 
-import { getOpenEventsByCategory } from '../utils/java-api';
+import { getOpenEventsByCategory } from '../services/events-service';
 
 const LiveEvents = () => {
 
