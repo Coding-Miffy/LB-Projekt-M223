@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from "./button";
 import { AuthContext } from '../contexts/AuthContext';
 
-const LoginForm = ({ onLogin }) => {
+const LoginForm = () => {
   // ==========================================
   // STATES: Formular-Daten
   // ==========================================
