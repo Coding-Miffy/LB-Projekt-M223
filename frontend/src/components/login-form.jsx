@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from "./button";
 import { AuthContext } from '../contexts/AuthContext';
 
-const LoginForm = ({ onLogin }) => {
+const LoginForm = ({ onLogin } = {}) => {
   // ==========================================
   // STATES: Formular-Daten
   // ==========================================
@@ -94,7 +94,24 @@ const LoginForm = ({ onLogin }) => {
       return;
     }
 
-    // Call AuthContext login (simulated async inside context)
+    const loginData = { usernameOrEmail, password };
+
+    // If a parent passed `onLogin`, call it (backwards compatibility)
+    if (typeof onLogin === 'function') {
+      setPendingLogin(true);
+      try {
+        // Support async handlers; call but don't await navigation handled by parent
+        const maybePromise = onLogin(loginData);
+        if (maybePromise && typeof maybePromise.then === 'function') {
+          maybePromise.catch(() => {});
+        }
+      } finally {
+        setPendingLogin(false);
+      }
+      return;
+    }
+
+    // Default: Call AuthContext login (simulated async inside context)
     login(usernameOrEmail, password);
     setPendingLogin(true);
   };
@@ -165,9 +182,9 @@ const LoginForm = ({ onLogin }) => {
       {/* SUBMIT BUTTON */}
       <div className="form-submit">
         <Button
-          text={isLoading ? "Lädt..." : "Einloggen"}
+          text={isLoading || pendingLogin ? "Lädt..." : "Einloggen"}
           onButtonClick={handleSubmit}
-          disabled={isLoading}
+          disabled={isLoading || pendingLogin}
           className="submit-button"
         />
       </div>

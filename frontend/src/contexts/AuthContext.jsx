@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
           email: usernameOrEmail.includes('@') 
             ? usernameOrEmail                 // Ist schon Email
             : `${usernameOrEmail}@example.com`, // Username → Fake Email
-          role: usernameOrEmail === 'admin' || usernameOrEmail === 'admin@quiz.com'
+          role: usernameOrEmail === 'admin' || usernameOrEmail === 'admin@eonet.com'
             ? 'ADMIN' 
             : 'USER'  // ← Backend verwendet "USER" nicht "PLAYER"!
         };

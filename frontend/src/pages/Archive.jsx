@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 // Importiert die Komponente zum Anzeigen eines archivierten Events
 import ArchiveEventCard from '../components/archive-event-card';
 
-import { getClosedEventsByCategory } from '../utils/java-api';
+import { getClosedEventsByCategory } from '../services/events-service';
 
 const Archive = () => {
 
