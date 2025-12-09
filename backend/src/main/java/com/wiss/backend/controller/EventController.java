@@ -245,12 +245,13 @@ public class EventController {
      * @throws com.wiss.backend.exception.EventNotFoundException wenn Event nicht existiert (404)
      */
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(
             summary = "Event löschen",
             description = "Löscht ein bestehendes Event"
     )
     @PreAuthorize("hasRole('ADMIN')")
-    @ApiResponse(responseCode = "200", description = "Event erfolgreich gelöscht")
+    @ApiResponse(responseCode = "204", description = "Event erfolgreich gelöscht")
     @ApiResponse(responseCode = "404", description = "Event nicht gefunden")
     @Tag(name = "Events – DTO", description = "Standard-CRUD-API für Events über DTO")
     public void deleteEvent(
