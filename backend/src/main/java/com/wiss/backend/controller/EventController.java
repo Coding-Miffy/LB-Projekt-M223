@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
@@ -74,6 +75,7 @@ public class EventController {
             summary = "Alle Events abrufen",
             description = "Gibt alle verfügbaren Events zurück"
     )
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ApiResponse(responseCode = "200", description = "Events erfolgreich abgerufen")
     @Tag(name = "Events – DTO", description = "Standard-CRUD-API für Events über DTO")
     public List<EventDTO> getAllEvents() {
@@ -93,6 +95,7 @@ public class EventController {
             summary = "Event nach ID abrufen",
             description = "Gibt ein spezifisches Event anhand der ID zurück"
     )
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ApiResponse(responseCode = "200", description = "Event gefunden")
     @ApiResponse(responseCode = "400", description = "Ungültige ID übergeben")
     @ApiResponse(responseCode = "404", description = "Event nicht gefunden")
@@ -115,6 +118,7 @@ public class EventController {
             summary = "Events nach Kategorien abrufen",
             description = "Gibt alle Events einer Kategorie zurück"
     )
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ApiResponse(responseCode = "200", description = "Events erfolgreich abgerufen")
     @ApiResponse(responseCode = "400", description = "Ungültige Kategorie übergeben")
     @Tag(name = "Events – Filter", description = "Filterfunktionen für Kategorie, Status, Datum & Kombinationen")
@@ -136,6 +140,7 @@ public class EventController {
             summary = "Events nach Status abrufen",
             description = "Gibt alle Events eines Status zurück"
     )
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ApiResponse(responseCode = "200", description = "Events erfolgreich abgerufen")
     @ApiResponse(responseCode = "400", description = "Ungültiger Status übergeben")
     @Tag(name = "Events – Filter", description = "Filterfunktionen für Kategorie, Status, Datum & Kombinationen")
@@ -157,6 +162,7 @@ public class EventController {
             summary = "Events nach Datum abrufen",
             description = "Gibt alle Events eines bestimmten Datums zurück"
     )
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ApiResponse(responseCode = "200", description = "Events erfolgreich abgerufen")
     @ApiResponse(responseCode = "400", description = "Ungültiges Datum übergeben")
     @Tag(name = "Events – Filter", description = "Filterfunktionen für Kategorie, Status, Datum & Kombinationen")
@@ -176,6 +182,7 @@ public class EventController {
             summary = "Anzahl aller Events abrufen",
             description = "Gibt die Anzahl aller Events zurück"
     )
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ApiResponse(responseCode = "200", description = "Anzahl Events erfolgreich abgerufen")
     @Tag(name = "Events – Statistiken", description = "Zählfunktionen nach Kategorie, Status oder Zeitraum")
     public long getEventCount() {
@@ -195,6 +202,7 @@ public class EventController {
             summary = "Neues Event erstellen",
             description = "Erstellt ein neues EONET-Event"
     )
+    @PreAuthorize("hasRole('ADMIN')")
     @ApiResponse(responseCode = "200", description = "Event erfolgreich erstellt")
     @ApiResponse(responseCode = "400", description = "Ungültige oder unvollständige Daten übergeben")
     @Tag(name = "Events – DTO", description = "Standard-CRUD-API für Events über DTO")
@@ -218,6 +226,7 @@ public class EventController {
             summary = "Event aktualisieren",
             description = "Aktualisiert ein bestehendes Event"
     )
+    @PreAuthorize("hasRole('ADMIN')")
     @ApiResponse(responseCode = "200", description = "Event erfolgreich aktualisiert")
     @ApiResponse(responseCode = "400", description = "Ungültige oder unvollständige Daten übergeben")
     @ApiResponse(responseCode = "404", description = "Event nicht gefunden")
@@ -240,6 +249,7 @@ public class EventController {
             summary = "Event löschen",
             description = "Löscht ein bestehendes Event"
     )
+    @PreAuthorize("hasRole('ADMIN')")
     @ApiResponse(responseCode = "200", description = "Event erfolgreich gelöscht")
     @ApiResponse(responseCode = "404", description = "Event nicht gefunden")
     @Tag(name = "Events – DTO", description = "Standard-CRUD-API für Events über DTO")
@@ -265,6 +275,7 @@ public class EventController {
             summary = "Events filtern",
             description = "Filtert bestehende Events"
     )
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ApiResponse(responseCode = "200", description = "Events erfolgreich gefiltert")
     @ApiResponse(responseCode = "400", description = "Ungültige Daten übergeben")
     @Tag(name = "Events – Filter", description = "Filterfunktionen für Kategorie, Status, Datum & Kombinationen")
@@ -304,6 +315,7 @@ public class EventController {
             summary = "Anzahl aller Events einer Kategorie abrufen",
             description = "Gibt die Anzahl aller Events einer Kategorie zurück"
     )
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ApiResponse(responseCode = "200", description = "Anzahl Events erfolgreich abgerufen")
     @ApiResponse(responseCode = "400", description = "Ungültige Kategorie übergeben")
     @Tag(name = "Events – Statistiken", description = "Zählfunktionen nach Kategorie, Status oder Zeitraum")
@@ -325,6 +337,7 @@ public class EventController {
             summary = "Anzahl aller Events eines Status abrufen",
             description = "Gibt die Anzahl aller Events eines Status zurück"
     )
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ApiResponse(responseCode = "200", description = "Anzahl Events erfolgreich abgerufen")
     @ApiResponse(responseCode = "400", description = "Ungültiger Status übergeben")
     @Tag(name = "Events – Statistiken", description = "Zählfunktionen nach Kategorie, Status oder Zeitraum")
@@ -347,6 +360,7 @@ public class EventController {
             summary = "Anzahl aller Events eines Zeitraums abrufen",
             description = "Gibt die Anzahl aller Events innerhalb eines Zeitraums zurück"
     )
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ApiResponse(responseCode = "200", description = "Anzahl Events erfolgreich abgerufen")
     @ApiResponse(responseCode = "400", description = "Ungültiges Datum übergeben")
     @Tag(name = "Events – Statistiken", description = "Zählfunktionen nach Kategorie, Status oder Zeitraum")
@@ -368,6 +382,7 @@ public class EventController {
             summary = "Alle Events als Formulardaten abrufen",
             description = "Gibt alle Events als strukturierte Daten für Formulare zurück"
     )
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ApiResponse(responseCode = "200", description = "Events erfolgreich abgerufen")
     @Tag(name = "Events – Formulardaten (Frontend)", description = "Spezielle Endpunkte für die Formularverwendung im Frontend")
     public List<EventFormDTO> getAllFormEvents() {
@@ -387,6 +402,7 @@ public class EventController {
             summary = "Einzelnes Event für Bearbeitung im Formular abrufen",
             description = "Gibt ein spezifisches Event anhand der ID zurück, optimiert für das Frontend-Formular"
     )
+    @PreAuthorize("hasRole('ADMIN')")
     @ApiResponse(responseCode = "200", description = "Event gefunden")
     @ApiResponse(responseCode = "400", description = "Ungültige ID übergeben")
     @ApiResponse(responseCode = "404", description = "Event nicht gefunden")
@@ -411,6 +427,7 @@ public class EventController {
             summary = "Neues Event erstellen über Formular",
             description = "Erstellt ein neues EONET-Event über das Frontend-Formular"
     )
+    @PreAuthorize("hasRole('ADMIN')")
     @ApiResponse(responseCode = "201", description = "Event erfolgreich erstellt")
     @ApiResponse(responseCode = "400", description = "Ungültige oder unvollständige Daten übergeben")
     @Tag(name = "Events – Formulardaten (Frontend)", description = "Spezielle Endpunkte für die Formularverwendung im Frontend")
@@ -435,6 +452,7 @@ public class EventController {
             summary = "Event aktualisieren über Formular",
             description = "Aktualisiert ein bestehendes Event über das Frontend-Formular"
     )
+    @PreAuthorize("hasRole('ADMIN')")
     @ApiResponse(responseCode = "200", description = "Event erfolgreich aktualisiert")
     @ApiResponse(responseCode = "400", description = "Ungültige oder unvollständige Daten übergeben")
     @ApiResponse(responseCode = "404", description = "Event nicht gefunden")
