@@ -68,6 +68,16 @@ public class AppUserService {
     }
 
     /**
+     * Findet einen User by Email.
+     *
+     * @param email Die Email
+     * @return Optional mit User oder empty
+     */
+    public Optional<AppUser> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    /**
      * Authentifiziert einen User.
      *
      * @param username Der Username

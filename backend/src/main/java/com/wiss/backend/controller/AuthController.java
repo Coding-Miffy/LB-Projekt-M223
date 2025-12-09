@@ -1,10 +1,13 @@
 package com.wiss.backend.controller;
 
+import com.wiss.backend.dto.LoginRequestDTO;
+import com.wiss.backend.dto.LoginResponseDTO;
 import com.wiss.backend.dto.RegisterRequestDTO;
 import com.wiss.backend.dto.RegisterResponseDTO;
 import com.wiss.backend.entity.AppUser;
 import com.wiss.backend.entity.Role;
 import com.wiss.backend.service.AppUserService;
+import com.wiss.backend.service.JwtService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -19,9 +23,11 @@ import java.util.Map;
 public class AuthController {
 
     private final AppUserService appUserService;
+    private final JwtService jwtService;
 
-    public AuthController(AppUserService appUserService) {
+    public AuthController(AppUserService appUserService, JwtService jwtService) {
         this.appUserService = appUserService;
+        this.jwtService = jwtService;
     }
 
     /**
@@ -35,7 +41,6 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequestDTO request) {
-
         try {
             // Service Layer aufrufen
             AppUser newUser = appUserService.registerUser(
@@ -67,6 +72,75 @@ public class AuthController {
             Map<String, String> error = new HashMap<>();
             error.put("error", "Registrierung fehlgeschlagen");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+        }
+    }
+
+    /**
+     * POST /api/auth/login
+     *
+     * Authentifiziert einen User und gibt JWT Token zurück.
+     *
+     * @Valid triggert die Bean Validation
+     * @RequestBody parsed JSON zu Java Object
+     */
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDTO request) {
+        try {
+            // User finden (Username oder Email)
+            Optional<AppUser> userOpt;
+
+            // Prüfen ob Email oder Username
+            if (request.getUsernameOrEmail().contains("@")) {
+                userOpt = appUserService.findByEmail(request.getUsernameOrEmail());
+            } else {
+                userOpt = appUserService.findByUsername(request.getUsernameOrEmail());
+            }
+
+            // User existiert nicht
+            if (userOpt.isEmpty()) {
+                return ResponseEntity
+                        .status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("error", "Ungültige Anmeldedaten"));
+            }
+
+            AppUser user = userOpt.get();
+
+            // Passwort prüfen
+            Optional<AppUser> authenticatedUser =
+                    appUserService.authenticateUser(user.getUsername(),
+                            request.getPassword());
+
+            if (authenticatedUser.isEmpty()) {
+                // Passwort falsch
+                return ResponseEntity
+                        .status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("error", "Ungültige Anmeldedaten"));
+            }
+
+            // JWT Token generieren
+            String token = jwtService.generateToken(
+                    user.getUsername(),
+                    user.getRole().name()
+            );
+
+            // Response DTO erstellen
+            LoginResponseDTO response = new LoginResponseDTO(
+                    token,
+                    user.getId(),
+                    user.getUsername(),
+                    user.getEmail(),
+                    user.getRole().name(),
+                    86400000L  // 24 Stunden in ms
+            );
+
+            // Success Response
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            // Unerwartete Fehler
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Ein Fehler ist aufgetreten: " + e.getMessage()));
         }
     }
 
