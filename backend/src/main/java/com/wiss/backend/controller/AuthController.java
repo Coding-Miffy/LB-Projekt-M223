@@ -179,7 +179,6 @@ public class AuthController {
     /**
      * GET /api/auth/test
      *
-     * Simple Test Endpoint.
      * Prüft ob der Controller erreichbar ist.
      */
     @GetMapping("/test")
