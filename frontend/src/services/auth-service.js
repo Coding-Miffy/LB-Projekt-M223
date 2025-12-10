@@ -56,6 +56,18 @@ export const logout = () => {
 };
 
 /**
+ * Hole User-Daten aus localStorage
+ * (Brauchen keinen Backend-Call, haben alles vom Login!)
+ */
+export const getUserData = () => {
+  const userDataString = localStorage.getItem('userData');
+  if (userDataString) {
+    return JSON.parse(userDataString);
+  }
+  return null;
+};
+
+/**
  * Prüft ob User eingeloggt ist
  * @returns {boolean} true wenn Token existiert
  */
