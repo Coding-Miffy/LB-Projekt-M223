@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -41,6 +42,18 @@ import java.util.Map;
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(AuthorizationDeniedException.class)
+    public ResponseEntity<ErrorResponseDTO> handleAccessDenied(
+            AuthorizationDeniedException ex, WebRequest request) {
+
+        return buildError(
+                "ACCESS_DENIED",
+                "Zugriff verweigert. Sie haben nicht die erforderlichen Berechtigungen.",
+                403,
+                request
+        );
+    }
 
     /**
      * Behandelt {@link EventNotFoundException}, wenn ein Event mit der

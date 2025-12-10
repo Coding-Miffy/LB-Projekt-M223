@@ -62,7 +62,8 @@ public class EventRepositoryTest {
                 EventCategory.volcanoes,
                 64.9631,
                 -19.0208,
-                EventStatus.open
+                EventStatus.open,
+                null
         );
 
         Event saved = entityManager.persistAndFlush(event);
@@ -87,7 +88,8 @@ public class EventRepositoryTest {
                 EventCategory.wildfires,
                 36.7783,
                 -119.4179,
-                EventStatus.open
+                EventStatus.open,
+                null
         );
 
         Event event2 = new Event(
@@ -96,7 +98,8 @@ public class EventRepositoryTest {
                 EventCategory.wildfires,
                 -25.2744,
                 133.7751,
-                EventStatus.closed
+                EventStatus.closed,
+                null
         );
 
         Event otherEvent = new Event(
@@ -105,7 +108,8 @@ public class EventRepositoryTest {
                 EventCategory.earthquakes,
                 38.4237,
                 27.1428,
-                EventStatus.open
+                EventStatus.open,
+                null
         );
 
         entityManager.persist(event1);
