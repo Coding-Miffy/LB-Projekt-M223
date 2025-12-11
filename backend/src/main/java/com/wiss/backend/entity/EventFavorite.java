@@ -1,11 +1,10 @@
 package com.wiss.backend.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user_sessions")
-public class UserSession {
+@Table(name = "event_favorites")
+public class EventFavorite {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,9 +16,9 @@ public class UserSession {
     @Column(nullable = false)
     private Long eventId;
 
-    public UserSession() {}
+    protected EventFavorite() {}
 
-    public UserSession(Long userId, Long eventId) {
+    public EventFavorite(Long userId, Long eventId) {
         this.userId = userId;
         this.eventId = eventId;
     }
