@@ -16,9 +16,9 @@ tbd
 ### User Stories
 tbd
 
-- **User Story 1**: tbd
-- **User Story 2**: tbd
-- **User Story 3**: tbd
+- **User Story 1**: [User Story 1 tbd](https://github.com/Coding-Miffy/LB-Projekt-M223/issues/8)
+- **User Story 2**: [User Story 2 tbd](https://github.com/Coding-Miffy/LB-Projekt-M223/issues/9)
+- **User Story 3**: [User Story 3 tbd](https://github.com/Coding-Miffy/LB-Projekt-M223/issues/10)
 
 ### Use Case
 tbd
