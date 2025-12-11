@@ -32,16 +32,17 @@ const Navigation = () => {
                 </NavLink>
             ) : (
                 <>
-                    <span style={{
+                    <NavLink to='/account' className={({ isActive }) => isActive ? 'active' : ''} style={{
                         marginLeft: '20px',
                         padding: '5px 10px',
                         background: (user?.role === 'ADMIN') ? '#dc3545' : '#007bff',
                         color: 'white',
                         borderRadius: '4px',
-                        fontSize: '14px'
+                        fontSize: '14px',
+                        textDecoration: 'none'
                     }}>
                         👤 {user?.username ?? 'User'} ({user?.role ?? 'USER'})
-                    </span>
+                    </NavLink>
 
                     <button
                         onClick={logout}
