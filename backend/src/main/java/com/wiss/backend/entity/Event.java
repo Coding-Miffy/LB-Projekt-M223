@@ -20,8 +20,8 @@ import java.time.LocalDate;
  * </p>
  *
  * @author Natascha Blumer
- * @version 1.0
- * @since 2025-07-18
+ * @version 2.0
+ * @since 2025-12-11
  *
  * @see EventCategory Enum mit allen unterstützten Naturereignis-Kategorien
  * @see EventStatus Enum mit allen gültigen Statuswerte für ein Naturereignis
@@ -92,6 +92,13 @@ public class Event {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by_user_id")
     private AppUser createdBy;
+
+    /**
+     * Zählt, wie oft ein Event als Favorit markiert wurde.
+     * @see #getFavoritesCount()
+     */
+    @Column(nullable = false)
+    private int favoritesCount = 0;
 
     /**
      * Leerer Standard-Konstruktor (für JPA erforderlich).
@@ -190,4 +197,28 @@ public class Event {
 
     public AppUser getCreatedBy() { return createdBy; }
     public void setCreatedBy(AppUser createdBy) { this.createdBy = createdBy; }
+
+    public int getFavoritesCount() { return favoritesCount; }
+
+    /**
+     * Erhöht den Favoritenzähler des Events um 1.
+     * <p>
+     * Diese Methode wird aufgerufen, wenn ein User das Event als Favorit markiert.
+     * </p>
+     */
+    public void incrementFavorites() {
+        this.favoritesCount++;
+    }
+
+    /**
+     * Verringert den Favoritenzähler des Events um 1, sofern der aktuelle Wert grösser als 0 ist.
+     * <p>
+     * Diese Methode wird aufgerufen, wenn ein User das Event aus seinen Favoriten entfernt.
+     * </p>
+     */
+    public void decrementFavorites() {
+        if (this.favoritesCount > 0) {
+            this.favoritesCount--;
+        }
+    }
 }
