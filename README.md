@@ -14,7 +14,7 @@ tbd
 tbd
 
 ### User Stories
-tbd
+Die folgenden User Stories beschreiben typische Nutzungsszenarien aus Sicht der Anwender:innen. Sie helfen, die fachlichen Anforderungen verständlich zu formulieren und den Fokus auf die Nutzerbedürfnisse zu legen.
 
 - **User Story 1**: [User Story 1 tbd](https://github.com/Coding-Miffy/LB-Projekt-M223/issues/8)
 - **User Story 2**: [User Story 2 tbd](https://github.com/Coding-Miffy/LB-Projekt-M223/issues/9)
@@ -52,11 +52,7 @@ tbd (Beschreibung in eigenen Worten)
 
 >[!NOTE]
 >Abschnitt "Backend" vielleicht noch nicht vollständig
-> - Klassendiagramm?
 > - REST-Schnittstellen?
-> - Testplan, Testfälle, Testumgebung?
-> - Durchführung der Tests?
-> - Installationsanleitung?
 
 ## Frontend
 tbd
@@ -81,23 +77,40 @@ tbd
 
 tbd (Beschreibung in eigenen Worten)
 
->[!NOTE]
->Abschnitt "Frontend" vielleicht noch nicht vollständig
-> - Storyboard, Mockups..?
-> - Testplan, Testfälle, Testumgebung?
-> - Durchführung der Tests?
-> - Installationsanleitung?
+## Sicherheitskonzept
+tbd
 
+## Testplan
+tbd
 
->[!NOTE]
->## Noch zu integrieren:
->- Sicherheitskonzept
->- Dokumentation (Swagger / OpenAPI, JavaDoc?)
+### Testfälle Backend
+| ID | Name | Klasse | Testziel |
+|:-:|:--|:--|:--|
+| BE1 | tbd | tbd | tbd |
+
+### Testfälle Frontend
+| ID | Name | Komponente | Testziel |
+|:-:|:--|:--|:--|
+| FE1 | tbd | tbd | tbd |
+
+### Durchführung der Tests
+tbd
+
+## Installationsanleitung
+tbd
+
+## Dokumentation
+tbd
+
+### Swagger / OpenAPI
+tbd
+
+### JavaDoc
+tbd
 
 ## Hilfestellungen
 Während der Entwicklung dieses Projekts haben wir auf verschiedene externe Hilfsmittel zurückgegriffen, um gezielt Unterstützung bei der Umsetzung, Strukturierung und Dokumentation zu erhalten.  
 Sie trugen dazu bei, fachliche Unsicherheiten zu klären, bewährte Vorgehensweisen zu übernehmen und die Qualität der Lösung zu verbessern.
-
 
 ### ChatGPT
 ChatGPT wurde punktuell als Unterstützung eingesetzt, insbesondere in folgenden Bereichen:
