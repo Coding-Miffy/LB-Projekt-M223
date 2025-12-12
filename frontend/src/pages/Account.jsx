@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useMemo } from 'react';
 import categoryEmoji from '../utils/categoryEmoji';
 import { useFavorites } from '../contexts/FavoritesContext';
+import { updateEvent } from '../services/events-service';
 
 const Account = () => {
   const { user, logout } = useAuth();
@@ -28,6 +29,33 @@ const Account = () => {
   const handleLogout = () => {
     logout();
     navigate('/');
+  };
+
+  const handleGoTo = async (ev) => {
+    const isArchived = ev.status === 'closed' || ev.archived === true;
+    try {
+      if (isArchived) {
+        navigate('/archive', { state: { focusEvent: ev } });
+        return;
+      }
+
+      // If the event is marked inactive (active === false) move it to archive on the server
+      if (ev.active === false) {
+        try {
+          await updateEvent(ev.id, { status: 'closed', archived: true });
+        } catch (err) {
+          // ignore failure for offline/dev mode
+          console.warn('Could not archive event on server, continuing to archive view locally.');
+        }
+        navigate('/archive', { state: { focusEvent: { ...ev, status: 'closed', archived: true } } });
+        return;
+      }
+
+      // otherwise go to live map and focus
+      navigate('/live-events', { state: { focusEvent: ev } });
+    } catch (err) {
+      console.error('Navigation error', err);
+    }
   };
 
   // removeFavorite comes from FavoritesContext
@@ -81,6 +109,7 @@ const Account = () => {
                         {ev.description && <p className="archive-card-detail">{ev.description}</p>}
                       </div>
                       <div className="card-actions">
+                        <button onClick={() => handleGoTo(ev)} className="btn-primary">Go to</button>
                         <button onClick={() => removeFavorite(ev.id)} className="btn-secondary">Entfernen</button>
                       </div>
                     </div>

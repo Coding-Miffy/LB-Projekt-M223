@@ -5,6 +5,8 @@ import categoryEmoji from '../utils/categoryEmoji';
 // Importiere den Context, der die Kategorie-Daten global bereitstellt
 import { CategoryContext } from '../contexts/CategoryContext';
 import { useFavorites } from '../contexts/FavoritesContext';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 // Die Komponente erhält drei Props: title, date, category
 const ArchiveEventCard = ({ title, date, category, onClick }) => {
@@ -27,6 +29,8 @@ const ArchiveEventCard = ({ title, date, category, onClick }) => {
 
     // favorites helpers
     const { isFavorite, toggleFavorite } = useFavorites();
+    const navigate = useNavigate();
+    const { isAuthenticated } = useAuth();
 
     const id = title + (date || '');
     const fav = isFavorite(id);
@@ -39,7 +43,7 @@ const ArchiveEventCard = ({ title, date, category, onClick }) => {
                     <div className="emoji">{emoji}</div>
                 </div>
                 <div>
-                    <button onClick={(e) => { e.stopPropagation(); toggleFavorite({ id, title, date, category }); }} style={{ background: 'transparent', border: 'none', color: fav ? '#ff6b6b' : '#888', cursor: 'pointer', fontSize: '18px' }} aria-label="Toggle favorite">
+                    <button onClick={(e) => { e.stopPropagation(); if (!isAuthenticated) { navigate('/login'); return; } toggleFavorite({ id, title, date, category }); }} style={{ background: 'transparent', border: 'none', color: fav ? '#ff6b6b' : '#888', cursor: 'pointer', fontSize: '18px' }} aria-label="Toggle favorite">
                         {fav ? '❤' : '♡'}
                     </button>
                 </div>

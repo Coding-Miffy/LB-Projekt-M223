@@ -4,18 +4,19 @@ import { useEffect, useState } from 'react';
 import ArchiveEventCard from '../components/archive-event-card';
 
 import { getClosedEventsByCategory } from '../services/events-service';
+import { useLocation } from 'react-router-dom';
 
 const Archive = () => {
 
     // Zustand für die angezeigten Events
     const [events, setEvents] = useState([]);
-    // Zustand für potenzielle Fehler beim Laden
     const [error, setError] = useState(null);
 
     // Zustände für Filter: Kategorie, Datum, Begrenzung
     const [selectedCategory, setSelectedCategory] = useState('wildfires');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const location = useLocation();
 
     // useEffect wird ausgeführt, wenn Filter verändert werden
     useEffect(() => {
@@ -29,6 +30,15 @@ const Archive = () => {
 
     // State für Modal / Fenster
     const [selectedEvent, setSelectedEvent] = useState(null);
+
+    // If navigated to archive with a focusEvent, open it
+    useEffect(() => {
+        const focusEvent = location.state?.focusEvent;
+        if (focusEvent) {
+            setSelectedCategory(focusEvent.category || 'all');
+            setSelectedEvent(focusEvent);
+        }
+    }, [location.state]);
 
     return (
         <div className="past-events-container" style={{ padding: '1rem' }}>

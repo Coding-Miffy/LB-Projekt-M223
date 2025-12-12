@@ -7,6 +7,8 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 // Funktion zur Zuordnung eines Emojis basierend auf der Kategorie
 import categoryEmoji from '../utils/categoryEmoji';
 import { useFavorites } from '../contexts/FavoritesContext';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 
 // Hilfsfunktion: Erstellt ein benutzerdefiniertes Leaflet-Icon mit einem Emoji
@@ -22,6 +24,8 @@ const getEmojiIcon = (emoji) =>
 // Hauptkomponente: Stellt eine interaktive Leaflet-Karte dar
 const Map = ({ center, zoom, events }) => {
     const { isFavorite, toggleFavorite } = useFavorites();
+    const navigate = useNavigate();
+    const { isAuthenticated } = useAuth();
     return (
         <MapContainer center={center} zoom={zoom} style={{ height: '50vh', width: '100%' }}>
             {/* Hintergrundkarte mit OpenStreetMap-Kachelserver */}
@@ -49,7 +53,7 @@ const Map = ({ center, zoom, events }) => {
                                 <div className="popup-emoji">{emoji}</div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                     <div className="popup-title">{event.title}</div>
-                                    <button onClick={(e) => { e.stopPropagation(); toggleFavorite(event); }} style={{ background: 'transparent', border: 'none', fontSize: '18px', color: isFavorite(event.id) ? '#ff6b6b' : '#888', cursor: 'pointer' }} aria-label="Toggle favorite">
+                                    <button onClick={(e) => { e.stopPropagation(); if (!isAuthenticated) { navigate('/login'); return; } toggleFavorite(event); }} style={{ background: 'transparent', border: 'none', fontSize: '18px', color: isFavorite(event.id) ? '#ff6b6b' : '#888', cursor: 'pointer' }} aria-label="Toggle favorite">
                                         {isFavorite(event.id) ? '❤' : '♡'}
                                     </button>
                                 </div>
