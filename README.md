@@ -264,13 +264,34 @@ Die Anwendung ist anschliessend unter [http://localhost:8080](http://localhost:8
 tbd
 
 ## Dokumentation
-tbd
+Die Applikation verfügt über zwei Arten technischer Dokumentation: **Swagger / OpenAPI** und **JavaDoc**. Beide werden nachfolgend kurz erläutert.
 
 ### Swagger / OpenAPI
-tbd
+Die OpenAPI-Dokumentation wurde mithilfe der `springdoc-openapi`-Bibliothek umgesetzt und durch gezielte Annotations wie `@Operation` und `@ApiResponse` ergänzt.
+Nach dem Start der Applikation ist die Dokumentation unter folgender URL aufrufbar:
+
+```bash
+http://localhost:8080/swagger-ui/index.html
+```
+
+Dort sind alle verfügbaren Endpunkte übersichtlich dargestellt, inklusive Parameter, Rückgabewerten und HTTP-Statuscodes. Diese Oberfläche kann zur Exploration und zum Testen der API verwendet werden.
 
 ### JavaDoc
-tbd
+Der Quellcode ist ausführlich mit JavaDoc-Kommentaren versehen. Diese Dokumentation beschreibt die wichtigsten Klassen, DTOs und Methoden inklusive ihrer Aufgaben, Parameter und Rückgabewerte.
+
+Um die JavaDoc-Dokumentation lokal zu generieren, kann folgender Maven-Befehl verwendet werden:
+
+```bash
+mvn javadoc:javadoc
+```
+
+Die generierte HTML-Dokumentation befindet sich anschliessend in diesem Verzeichnis:
+
+```bash
+target/site/apidocs/index.html
+```
+
+Diese Datei kann im Browser geöffnet werden, um einen detaillierten Überblick über die Klassenstruktur und deren Beziehungen zu erhalten.
 
 ## Hilfestellungen
 Während der Entwicklung dieses Projekts haben wir auf verschiedene externe Hilfsmittel zurückgegriffen, um gezielt Unterstützung bei der Umsetzung, Strukturierung und Dokumentation zu erhalten.  
