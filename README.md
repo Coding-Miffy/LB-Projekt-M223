@@ -20,13 +20,6 @@ Die folgenden User Stories beschreiben typische Nutzungsszenarien aus Sicht der 
 - **User Story 2**: [Events favorisieren für eingeloggte User](https://github.com/Coding-Miffy/LB-Projekt-M223/issues/9)
 - **User Story 3**: [Event-Verwaltung für Admins](https://github.com/Coding-Miffy/LB-Projekt-M223/issues/10)
 
-### Use Case
-tbd
-
->[!NOTE]
->Abschnitt "Anforderungsanalyse" vielleicht noch nicht vollständig
->- Kernaufgaben?
-
 ## Backend
 tbd
 
@@ -80,11 +73,6 @@ Das Backend wurde mit **Java 21** und **Spring Boot** umgesetzt und stellt eine 
 Die **Authentifizierung und Autorisierung** erfolgt mit **Spring Security** und **JWT**. Nach dem Login wird ein JWT-Token generiert, welcher bei geschützten Requests im HTTP-Header mitgesendet und serverseitig validiert wird. Passwörter werden dabei sicher mit **BCrypt** gehasht gespeichert.  
 Der Datenbankzugriff erfolgt über **Spring Data JPA** mit **Hibernate** als ORM. Als Produktivdatenbank wird **PostgreSQL** verwendet, während für automatisierte Tests eine **H2 In-Memory-Datenbank** eingesetzt wird. Der Build-Prozess wird mit **Maven** gesteuert. Zusätzlich ermöglicht **Springdoc OpenAPI** eine übersichtliche Dokumentation der REST-Schnittstellen. Backend- und Security-Tests werden mit **Spring Boot Test** und **Spring Security Test** umgesetzt.
 
->[!NOTE]
->Abschnitt "Backend" vielleicht noch nicht vollständig
-> - REST-Schnittstellen?
-> - Vielleicht die Diagramme über Links einbinden? (sind gross, brauchen viel Platz)
-
 ## Frontend
 tbd
 
@@ -110,7 +98,11 @@ tbd
 tbd (Beschreibung in eigenen Worten)
 
 ## Sicherheitskonzept
-tbd
+Die Anwendung nutzt ein **JWT-basiertes Security-Modell**, um Benutzer eindeutig zu authentifizieren und Rollen sauber zu trennen. Passwörter werden mit **BCrypt** gehasht gespeichert, sodass keine Klartextdaten in der Datenbank liegen. Beim Login erstellt das Backend über den `JwtService` ein signiertes JWT, das Benutzername, Rolle und Ablaufzeit enthält. Der Token wird im Frontend gespeichert und bei jedem Request automatisch per **Authorization-Header** mitgesendet.
+
+Die **SecurityConfig** schützt alle Endpoints standardmässig und erlaubt nur definierte öffentliche Routen. Ein eigener `JwtAuthenticationFilter` prüft bei jedem Request den Token, lädt die Benutzerinformationen und setzt bei Gültigkeit die Authentifizierung in den SecurityContext. Das System arbeitet vollständig **stateless**, da keine Server-Sessions verwendet werden.
+
+Über die Rollen `USER` und `ADMIN` wird gesteuert, wer Events ansehen oder verwalten darf. Das Frontend setzt zusätzlich **Protected Routes** ein, damit nur berechtigte Benutzer:innen sensible Seiten aufrufen können. Dadurch entsteht ein klarer, mehrfach abgesicherter Authentifizierungs- und Autorisierungsfluss.
 
 ## Testplan Backend
 Der Backend-Testplan überprüft die wichtigsten sicherheitsrelevanten Funktionen der API. Dabei werden insbesondere Rollenrechte (`USER`/`ADMIN`) und der Zugriff auf geschützte Endpunkte automatisiert getestet.
