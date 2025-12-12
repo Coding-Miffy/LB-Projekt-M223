@@ -209,7 +209,7 @@ Passwort: [YOUR-DB-PASSWORD]
 ```
 
 #### Beispiel-Daten einmalig einfügen
-Im Verzeichnis `src/main/resources/data/` befindet sich die Datei `data.sql`, mit der einige Beispiel-Events und Userkonten in die Datenbank eingefügt werden können. Dieser Schritt ist optional und sollte **nur einmalig** ausgeführt werden.
+Im Verzeichnis `src/main/resources/` befindet sich die Datei `data.sql`, mit der einige Beispiel-Events und Userkonten in die Datenbank eingefügt werden können. Dieser Schritt ist optional und sollte **nur einmalig** ausgeführt werden.
 
 **Im Terminal ins Verzeichnis wechseln und folgenden Befehl ausführen**:
 
@@ -218,20 +218,38 @@ Get-Content data.sql | docker exec -i eonet_multiuser_postgres psql -U [YOUR-DB-
 ```
 
 #### Environment-Variablen in IntelliJ setzen
-Das Backend liest `DB_USERNAME` und `DB_PASSWORD` aus der Umgebung (siehe `application.properties`). 
+Das Backend verwendet sensible Konfigurationswerte wie Datenbank-Zugangsdaten und den JWT-Secret Key nicht direkt im Code.  
+Stattdessen werden diese Werte über Environment-Variablen eingelesen (siehe `application.properties`):
+
+```properties
+spring.datasource.username=${DB_USERNAME}
+spring.datasource.password=${DB_PASSWORD}
+
+jwt.secret=${JWT_SECRET}
+jwt.expiration=86400000
+```
+
+Damit das Backend korrekt startet, müssen alle drei Variablen gesetzt werden:
+
+- `DB_USERNAME` – Benutzername der PostgreSQL-Datenbank
+- `DB_PASSWORD` – Passwort der PostgreSQL-Datenbank
+- `JWT_SECRET` – sicherer Schlüssel zur Signierung der JWT-Tokens
 
 **In IntelliJ müssen diese Variablen vor dem Start folgendermassen definiert werden**:
 
-- Menü **Run > Edit Configurations**
-- Run-Konfiguration auswählen
-- Unter **Environment variables** eintragen:
+1. Menü **Run > Edit Configurations**
+2. Run-Konfiguration auswählen
+3. Unter **Environment variables** eintragen:
 
 ```txt
-DB_USERNAME=[YOUR-DB-USER]; DB_PASSWORD=[YOUR-DB-PASSWORD]
+DB_USERNAME=[YOUR-DB-USER]; DB_PASSWORD=[YOUR-DB-PASSWORD]; JWT_SECRET=[YOUR-JWT-SECRET]
 ```
 
 >[!IMPORTANT]
->Diese Variablen müssen zwingend mit dem im `docker-compose.yml` definierten Benutzernamen und Passwort für die Datenbank übereinstimmen.
+>`DB_USERNAME` und `DB_PASSWORD` müssen exakt den Werten entsprechen, die im `docker-compose.yml` für PostgreSQL festgelegt wurden.
+
+>[!TIP]
+>Der `JWT_SECRET` sollte ein langer zufälliger Schlüssel (min. 32 Zeichen) sein. Er kann mit dem [JWT Secret Key Generator](https://jwtsecrets.com/) generiert werden. 
 
 ### Backend starten
 **Zurück ins Projektverzeichnis wechseln und das Backend mit Maven starten**:
@@ -241,9 +259,6 @@ mvn spring-boot:run
 ```
 
 Die Anwendung ist anschliessend unter [http://localhost:8080](http://localhost:8080) erreichbar.
-
->[!NOTE]
->JWT-Token-Secret-Key?
 
 ### Frontend installieren
 tbd
