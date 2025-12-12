@@ -1,3 +1,11 @@
+-- Beispiel User
+INSERT INTO app_users (username, email, password, role) VALUES
+     ('admin', 'admin@eonet.com', '$2a$12$V/IUNw153HLTafqZB1NWEeAZT3C2Iiw7BImsXiv86wS.SHCUBeGUq', 'ADMIN'),  -- Passwort: admin123
+     ('admin2', 'admin2@eonet.com', '$2a$12$V/IUNw153HLTafqZB1NWEeAZT3C2Iiw7BImsXiv86wS.SHCUBeGUq', 'ADMIN'), -- Passwort: admin123
+     ('user1', 'user1@eonet.com', '$2a$12$fcmJIZwUxwvImYOa1NwpquK6ERj67aC47aMj/qg4a24p2.Fe0nFsi', 'USER'), -- Passwort: player123
+     ('user2', 'user2@eonet.com', '$2a$12$fcmJIZwUxwvImYOa1NwpquK6ERj67aC47aMj/qg4a24p2.Fe0nFsi', 'USER'); -- Passwort: player123
+
+-- Beispiel-Events
 INSERT INTO public.events (category,latitude,longitude,status,title,"date") VALUES
 	 ('floods',-6.21,106.85,'open','Floods in Jakarta','2025-07-17'),
 	 ('wildfires',37.8651,-119.5383,'open','Wildfire near Yosemite National Park','2025-07-15'),
