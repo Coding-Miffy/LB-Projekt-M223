@@ -7,8 +7,7 @@ import com.wiss.backend.repository.EventRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet
-        .AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -51,13 +50,13 @@ public class EventControllerSecurityTest {
 
     // Tests ohne Login
     @Test
-    void getAllEvents_withoutAuth_shouldReturn401() throws Exception {
+    void getAllEvents_withoutAuth_shouldReturn403() throws Exception {
         mockMvc.perform(get("/api/events"))
                 .andExpect(status().isForbidden());  // 403 erwartet
     }
 
     @Test
-    void createEvent_withoutAuth_shouldReturn401() throws Exception {
+    void createEvent_withoutAuth_shouldReturn403() throws Exception {
         String eventJson = """
                 {
                     "title": "Water Discoloration in Lake Victoria",
