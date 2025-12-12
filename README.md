@@ -217,6 +217,15 @@ Im Verzeichnis `src/main/resources/` befindet sich die Datei `data.sql`, mit der
 Get-Content data.sql | docker exec -i eonet_multiuser_postgres psql -U [YOUR-DB-USER] -d eonet_multiuser_app
 ```
 
+#### Login-Daten für die Beispiel-User
+
+```txt
+username: admin, password: admin123, role: ADMIN;
+username: admin2, password: admin123, role: ADMIN;
+username: user1, password: player123, role: USER;
+username: user2, password: player123, role: USER;
+```
+
 #### Environment-Variablen in IntelliJ setzen
 Das Backend verwendet sensible Konfigurationswerte wie Datenbank-Zugangsdaten und den JWT-Secret Key nicht direkt im Code.  
 Stattdessen werden diese Werte über Environment-Variablen eingelesen (siehe `application.properties`):
