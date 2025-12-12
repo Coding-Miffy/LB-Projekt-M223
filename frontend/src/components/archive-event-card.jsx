@@ -6,7 +6,7 @@ import categoryEmoji from '../utils/categoryEmoji';
 import { CategoryContext } from '../contexts/CategoryContext';
 
 // Die Komponente erhält drei Props: title, date, category
-const ArchiveEventCard = ({ title, date, category }) => {
+const ArchiveEventCard = ({ title, date, category, onClick }) => {
 
     // Zugriff auf den Kategorien-Context (bereitgestellt vom CategoryProvider)
     const { categories } = useContext(CategoryContext);
@@ -26,9 +26,9 @@ const ArchiveEventCard = ({ title, date, category }) => {
 
     // Die eigentliche Card-UI
     return (
-        <div className="archive-card">
+        <div className="archive-card" onClick={onClick} style={{ cursor: onClick ? 'pointer' : 'default' }}>
             {/* Emoji prominent darstellen */}
-            <div className="emoji" style={{ fontSize: '2rem' }}>{emoji}</div>
+            <div className="emoji">{emoji}</div>
 
             {/* Titel des Events */}
             <h3 className="archive-card-title">{title}</h3>
