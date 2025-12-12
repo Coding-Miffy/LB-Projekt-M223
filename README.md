@@ -130,6 +130,101 @@ tbd
 ## Installationsanleitung
 tbd
 
+### Voraussetzungen
+Für die Ausführung werden folgende Komponenten benötigt:
+
+**Backend**:
+- **Java Development Kit (JDK) 17** oder neuer
+- **Maven**
+- **Git** (zum Klonen des Repositories)
+- **Docker**
+- **Docker Compose**
+
+**Frontend**:
+- **Node.js** (empfohlene LTS-Version)
+- **npm** (wird automatisch mit Node.js installiert)
+
+**Empfohlene IDE**:
+- **Backend**: IntelliJ
+- **Frontend**: Visual Studio Code
+
+### Projekt vorbereiten
+**Projektverzeichnis klonen oder entpacken**:
+
+```bash
+git clone https://github.com/Coding-Miffy/LB-Projekt-M223.git
+cd LB-Projekt-M223
+```
+
+### Backend installieren
+
+#### PostgreSQL-Datenbank via Docker Compose starten
+Die PostgreSQL-Datenbank wird über Docker Compose gestartet. Dadurch wird automatisch ein Container mit der korrekten Konfiguration bereitgestellt. Zuerst müssen aber Benutzername und Passwort für die Datenbank definiert werden.  
+
+**Benutzername und Passwort im `docker-compose.yml` definieren**:
+
+```yaml
+POSTGRES_USER: [YOUR-DB-USER] # TODO: Mit tatsächlichem Usernamen ersetzen
+POSTGRES_PASSWORD: [YOUR-DB-PASSWORD] # TODO: Mit tatsächlichem Passwort ersetzen
+```
+
+**Ins Docker-Verzeichnis wechseln und Container starten**:
+
+```bash
+cd backend/docker
+docker-compose up -d
+```
+
+**Verbindungsdetails der Datenbank**:
+
+```text
+Host: localhost
+Port: 5432
+Datenbank: eonet_multiuser_app
+Benutzer: [YOUR-DB-USER]
+Passwort: [YOUR-DB-PASSWORD]
+```
+
+#### Beispiel-Daten einmalig einfügen
+Im Verzeichnis `src/main/resources/data/` befindet sich die Datei `data.sql`, mit der einige Beispiel-Events und Userkonten in die Datenbank eingefügt werden können. Dieser Schritt ist optional und sollte **nur einmalig** ausgeführt werden.
+
+**Im Terminal ins Verzeichnis wechseln und folgenden Befehl ausführen**:
+
+```bash
+Get-Content data.sql | docker exec -i eonet_multiuser_postgres psql -U [YOUR-DB-USER] -d eonet_multiuser_app
+```
+
+#### Environment-Variablen in IntelliJ setzen
+Das Backend liest `DB_USERNAME` und `DB_PASSWORD` aus der Umgebung (siehe `application.properties`). 
+
+**In IntelliJ müssen diese Variablen vor dem Start folgendermassen definiert werden**:
+
+- Menü **Run > Edit Configurations**
+- Run-Konfiguration auswählen
+- Unter **Environment variables** eintragen:
+
+```txt
+DB_USERNAME=[YOUR-DB-USER]; DB_PASSWORD=[YOUR-DB-PASSWORD]
+```
+
+>[!IMPORTANT]
+>Diese Variablen müssen zwingend mit dem im `docker-compose.yml` definierten Benutzernamen und Passwort für die Datenbank übereinstimmen.
+
+### Backend starten
+**Zurück ins Projektverzeichnis wechseln und das Backend mit Maven starten**:
+
+```bash
+mvn spring-boot:run
+```
+
+Die Anwendung ist anschliessend unter [http://localhost:8080](http://localhost:8080) erreichbar.
+
+>[!NOTE]
+>JWT-Token-Secret-Key?
+
+### Frontend installieren
+tbd
+
 ## Dokumentation
 tbd
 
