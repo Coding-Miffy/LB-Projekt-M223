@@ -32,42 +32,13 @@ const Navigation = () => {
                 </NavLink>
             ) : (
                 <>
-                    <NavLink to='/account' className={({ isActive }) => isActive ? 'active' : ''} style={{
-                        marginLeft: '20px',
-                        padding: '6px 12px',
-                        background: (user?.role === 'ADMIN') ? '#dc3545' : '#007bff',
-                        color: 'white',
-                        borderRadius: '4px',
-                        fontSize: '14px',
-                        textDecoration: 'none',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        justifyContent: 'flex-start',
-                        gap: '8px',
-                        minWidth: '140px',
-                        boxSizing: 'border-box',
-                        textAlign: 'left'
-                    }}>
-                        <span style={{ marginLeft: 2 }}>👤</span>
-                        <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{user?.username ?? 'User'}</span>
-                        <span style={{ opacity: 0.9 }}>({user?.role ?? 'USER'})</span>
+                    <NavLink to='/account' className={({ isActive }) => `nav-user ${user?.role === 'ADMIN' ? 'admin' : 'user'} ${isActive ? 'active' : ''}`}>
+                        <span className="nav-avatar">👤</span>
+                        <span className="nav-username">{user?.username ?? 'User'}</span>
+                        <span className="nav-role">({user?.role ?? 'USER'})</span>
                     </NavLink>
 
-                    <button
-                        onClick={logout}
-                        style={{
-                            marginLeft: '12px',
-                            padding: '5px 10px',
-                            background: '#6c757d',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '4px',
-                            cursor: 'pointer',
-                            fontSize: '14px'
-                        }}
-                    >
-                        Logout
-                    </button>
+                    <button onClick={logout} className="nav-logout">Logout</button>
                 </>
             )}
 

@@ -82,6 +82,82 @@ h3 {
   color: #fff;
 }
 
+/* Account / user pill in the navigation */
+.nav-user {
+  margin-left: 20px;
+  padding: 6px 12px;
+  color: white;
+  border-radius: 4px;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  min-width: 140px;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.nav-user.user {
+  background: #007bff;
+}
+
+.nav-user.admin {
+  background: #dc3545;
+}
+
+.nav-user .nav-avatar {
+  margin-left: 2px;
+}
+
+.nav-user .nav-username {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-user .nav-role {
+  opacity: 0.9;
+}
+
+/* Logout button styling in nav */
+.nav-logout {
+  margin-left: 12px;
+  padding: 5px 10px;
+  background: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.nav-logout:hover { background: #5a6268; }
+
+.account-logout {
+  margin-top: 18px;
+}
+
+.account-divider {
+  margin: 20px 0;
+}
+
+.favorites-controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.favorites-label {
+  font-size: 14px;
+}
+
+.favorites-toggle {
+  margin-top: 8px;
+}
+
 /* ===== Home ===== */
 .home-container {
   height: 100%;
