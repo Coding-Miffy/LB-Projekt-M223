@@ -33,8 +33,8 @@ import java.util.List;
  * </p>
  *
  * @author Natascha Blumer
- * @version 1.0
- * @since 2025-07-19
+ * @version 2.0
+ * @since 2025-12-12
  * @see Event
  * @see EventDTO
  * @see EventFormDTO
