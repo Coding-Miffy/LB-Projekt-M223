@@ -8,6 +8,44 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * <h2>
+ *     Benutzer-Entität für die Authentifizierung
+ * </h2>
+ * <p>
+ *     Diese Klasse repräsentiert einen registrierten Benutzer der Anwendung.
+ *     Sie wird über JPA in der Tabelle <code>app_users</code> gespeichert
+ *     und implementiert {@link UserDetails}, damit Spring Security die
+ *     Benutzerinformationen direkt für Login und Rollenprüfung verwenden kann.
+ * </p>
+ *
+ * <h3>
+ *     Wichtige Eigenschaften:
+ * </h3>
+ * <ul>
+ *     <li><b>username</b>: eindeutiger Anmeldename</li>
+ *     <li><b>email</b>: eindeutige Kontaktadresse</li>
+ *     <li><b>password</b>: verschlüsseltes Passwort (BCrypt-Hash)</li>
+ *     <li><b>role</b>: fachliche Rolle (z.B. USER oder ADMIN)</li>
+ *     <li><b>version</b>: Versionsfeld für optimistische Sperren</li>
+ * </ul>
+ *
+ * <p>
+ *     Über die Methode {@link #getAuthorities()} wird die Rolle in ein
+ *     Spring-Security-Role-Format (z.B. <code>ROLE_ADMIN</code>)
+ *     übersetzt und kann in Security-Konfiguration und Controllern
+ *     für Autorisierungsprüfungen genutzt werden.
+ * </p>
+ *
+ * @author Natascha Blumer
+ * @version 1.0
+ * @since 2025-12-12
+ *
+ * @see Role
+ * @see com.wiss.backend.repository.AppUserRepository
+ * @see com.wiss.backend.service.AppUserService
+ * @see com.wiss.backend.service.AppUserDetailsService
+ */
 @Entity
 @Table(name = "app_users")
 public class AppUser implements UserDetails {
@@ -16,6 +54,13 @@ public class AppUser implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * Versionsfeld für optimistische Sperren.
+     * <p>
+     *     Wird von JPA automatisch erhöht, um konkurrierende Updates
+     *     auf dieselbe Benutzerzeile erkennen zu können.
+     * </p>
+     */
     @Version
     private Long version;
 
@@ -32,8 +77,19 @@ public class AppUser implements UserDetails {
     @Column(nullable = false)
     private Role role;
 
+    /**
+     * Standard-Konstruktor für JPA.
+     */
     public AppUser() {}
 
+    /**
+     * Komfort-Konstruktor zum Erstellen eines neuen Benutzers.
+     *
+     * @param username fachlicher Benutzername (eindeutig)
+     * @param email    E-Mail-Adresse (eindeutig)
+     * @param password verschlüsseltes Passwort (BCrypt-Hash)
+     * @param role     Zuweisung der Rolle (z.B. USER oder ADMIN)
+     */
     public AppUser(String username, String email, String password, Role role) {
         this.username = username;
         this.email = email;
@@ -45,7 +101,7 @@ public class AppUser implements UserDetails {
     /**
      * Gibt die Rollen (Authorities) des Users zurück.
      *
-     * @return Collection mit einer Authority (z.B. "ROLE_ADMIN")
+     * @return Collection mit einer Authority (z.B. {@code "ROLE_ADMIN"})
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -55,7 +111,7 @@ public class AppUser implements UserDetails {
     /**
      * Gibt das verschlüsselte Passwort zurück.
      *
-     * @return BCrypt Hash des Passworts
+     * @return BCrypt-Hash des Passworts
      */
     @Override
     public String getPassword() {
@@ -75,7 +131,7 @@ public class AppUser implements UserDetails {
     /**
      * Ist das Konto nicht abgelaufen?
      *
-     * @return true (Konto läuft nie ab)
+     * @return immer {@code true}, da keine Ablauf-Logik implementiert ist
      */
     @Override
     public boolean isAccountNonExpired() {
@@ -85,7 +141,7 @@ public class AppUser implements UserDetails {
     /**
      * Ist das Konto nicht gesperrt?
      *
-     * @return true (Konto ist nie gesperrt)
+     * @return immer {@code true}, da keine Sperr-Logik implementiert ist
      */
     @Override
     public boolean isAccountNonLocked() {
@@ -95,7 +151,7 @@ public class AppUser implements UserDetails {
     /**
      * Ist das Passwort nicht abgelaufen?
      *
-     * @return true (Passwort läuft nie ab)
+     * @return immer {@code true}, da Passwörter nicht ablaufen
      */
     @Override
     public boolean isCredentialsNonExpired() {
@@ -105,7 +161,7 @@ public class AppUser implements UserDetails {
     /**
      * Ist das Konto aktiviert?
      *
-     * @return true (Konto ist sofort aktiv)
+     * @return immer {@code true}, da alle Accounts sofort aktiv sind
      */
     @Override
     public boolean isEnabled() {
@@ -114,35 +170,19 @@ public class AppUser implements UserDetails {
 
     // Getter und Setter
     public Long getId() { return id;}
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public void setId(Long id) { this.id = id;}
 
-    public Long getVersion() {
-        return version;
-    }
-    public void setVersion(Long version) {
-        this.version = version;
-    }
+    public Long getVersion() { return version; }
+    public void setVersion(Long version) { this.version = version; }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    public void setUsername(String username) { this.username = username; }
 
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public void setPassword(String password) { this.password = password; }
 
-    public Role getRole() {
-        return role;
-    }
+    public Role getRole() { return role; }
     public void setRole(Role role) {
         this.role = role;
     }
