@@ -6,14 +6,17 @@ import { BrowserRouter } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext.jsx'
 
 import { CategoryProvider } from './contexts/CategoryContext.jsx';
+import { FavoritesProvider } from './contexts/FavoritesContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <CategoryProvider>
-          <App />
-        </CategoryProvider>
+        <FavoritesProvider>
+          <CategoryProvider>
+            <App />
+          </CategoryProvider>
+        </FavoritesProvider>
       </AuthProvider>
     </BrowserRouter>
   </StrictMode>,

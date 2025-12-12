@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import categoryEmoji from '../utils/categoryEmoji';
 // Importiere den Context, der die Kategorie-Daten global bereitstellt
 import { CategoryContext } from '../contexts/CategoryContext';
+import { useFavorites } from '../contexts/FavoritesContext';
 
 // Die Komponente erhält drei Props: title, date, category
 const ArchiveEventCard = ({ title, date, category, onClick }) => {
@@ -24,11 +25,25 @@ const ArchiveEventCard = ({ title, date, category, onClick }) => {
     // falls kein Treffer gefunden wurde, wird die übergebene category oder "Unknown" angezeigt
     const titleText = match?.title || category || 'Unknown';
 
+    // favorites helpers
+    const { isFavorite, toggleFavorite } = useFavorites();
+
+    const id = title + (date || '');
+    const fav = isFavorite(id);
+
     // Die eigentliche Card-UI
     return (
         <div className="archive-card" onClick={onClick} style={{ cursor: onClick ? 'pointer' : 'default' }}>
-            {/* Emoji prominent darstellen */}
-            <div className="emoji">{emoji}</div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <div>
+                    <div className="emoji">{emoji}</div>
+                </div>
+                <div>
+                    <button onClick={(e) => { e.stopPropagation(); toggleFavorite({ id, title, date, category }); }} style={{ background: 'transparent', border: 'none', color: fav ? '#ff6b6b' : '#888', cursor: 'pointer', fontSize: '18px' }} aria-label="Toggle favorite">
+                        {fav ? '❤' : '♡'}
+                    </button>
+                </div>
+            </div>
 
             {/* Titel des Events */}
             <h3 className="archive-card-title">{title}</h3>
