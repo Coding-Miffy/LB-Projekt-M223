@@ -31,8 +31,17 @@ tbd
 tbd
 
 ### Layer-Architektur-Diagramm
-tbd  
-[Diagramm]
+Die Backend-Architektur folgt einem klar strukturierten Layered Architecture Pattern, um Verantwortlichkeiten sauber zu trennen und die Wartbarkeit des Systems sicherzustellen. Das React-Frontend kommuniziert ausschliesslich über eine REST-API mit dem Backend, welches aus Controller-, Service- und Repository-Schichten besteht.
+
+**Jede Schicht übernimmt dabei eine klar definierte Aufgabe**: 
+
+- **Controller Layer**: Verarbeitet HTTP-Requests und delegiert die Geschäftslogik an die Services.
+- **Service Layer**: Enthält die zentrale Business-Logik, einschliesslich Authentifizierung, Event-Verwaltung und Favoriten-Transaktionen.
+- **Repository Layer**: Ist für den Zugriff auf die PostgreSQL-Datenbank zuständig und abstrahiert die Persistenz mittels JPA.
+
+Die Datenbank speichert alle Benutzer:innen, Events und Favoritenbeziehungen. Durch diese Aufteilung entsteht eine übersichtliche und erweiterbare Backend-Struktur, die eine klare Trennung zwischen Präsentation, Logik und Datenzugriff gewährleistet.
+
+![Layer-Architektur-Diagramm](/resources/backend-architecture-diagram.jpg)
 
 ### ER-Diagramm
 tbd  
