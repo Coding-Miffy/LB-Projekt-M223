@@ -10,6 +10,7 @@ import com.wiss.backend.service.AppUserService;
 import com.wiss.backend.service.JwtService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +45,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "http://localhost:5173")
+@Tag(name = "Authentifizierung", description = "Endpunkte für Registrierung, Login und Verfügbarkeitsprüfungen von Benutzerkonten.")
 public class AuthController {
 
     private final AppUserService appUserService;

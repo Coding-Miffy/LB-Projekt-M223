@@ -4,6 +4,7 @@ import com.wiss.backend.entity.AppUser;
 import com.wiss.backend.service.EventFavoriteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -33,6 +34,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/events")
+@Tag(name = "Event-Favoriten", description = "Endpunkte zum Markieren von Favoriten sowie zum Auslesen des Favoritenzählers.")
 public class EventFavoriteController {
 
     private final EventFavoriteService favoriteService;
