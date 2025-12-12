@@ -56,12 +56,28 @@ tbd
 [Diagramm]
 
 ### Technologie-Stack
-tbd 
+
 | Technologie | Version | Verwendung |
 |:--|:-:|:--|
-| tbd | tbd | tbd |
+| Java | 21 | Programmiersprache für das Backend |
+| Spring Boot | 3.3.7 | Zentrales Backend-Framework |
+| Spring Web | 3.3.7 | Implementierung der REST-API |
+| Spring Security | 6.x | Authentifizierung und Autorisierung |
+| JWT (JJWT) | 0.11.5 | Token-basierte Authentifizierung |
+| BCrypt | - | Sicheres Hashing von Passwörtern |
+| Spring Data JPA / Hibernate | 6.x | ORM für Datenbankzugriffe |
+| PostgreSQL | 16 | Relationale Produktivdatenbank |
+| H2 | - | In-Memory-Datenbank für Tests |
+| Maven | 3.x | Build-Tool und Dependency-Management |
+| Springdoc OpenAPI | 2.3.0 | API-Dokumentation (Swagger UI) |
+| Spring Boot Test | 3.3.7 | Backend-Tests |
+| Spring Security Test | 6.x | Tests für Security-Konfiguration |
 
-tbd (Beschreibung in eigenen Worten)
+#### Beschreibung:
+
+Das Backend wurde mit **Java 21** und **Spring Boot** umgesetzt und stellt eine REST-basierte API für das Frontend bereit. Über **Spring Web** werden HTTP-Anfragen verarbeitet und an Controller und Services weitergeleitet.  
+Die **Authentifizierung und Autorisierung** erfolgt mit **Spring Security** und **JWT**. Nach dem Login wird ein JWT-Token generiert, welcher bei geschützten Requests im HTTP-Header mitgesendet und serverseitig validiert wird. Passwörter werden dabei sicher mit **BCrypt** gehasht gespeichert.  
+Der Datenbankzugriff erfolgt über **Spring Data JPA** mit **Hibernate** als ORM. Als Produktivdatenbank wird **PostgreSQL** verwendet, während für automatisierte Tests eine **H2 In-Memory-Datenbank** eingesetzt wird. Der Build-Prozess wird mit **Maven** gesteuert. Zusätzlich ermöglicht **Springdoc OpenAPI** eine übersichtliche Dokumentation der REST-Schnittstellen. Backend- und Security-Tests werden mit **Spring Boot Test** und **Spring Security Test** umgesetzt.
 
 >[!NOTE]
 >Abschnitt "Backend" vielleicht noch nicht vollständig
@@ -84,10 +100,11 @@ tbd
 [Diagramm]
 
 ### Technologie-Stack
-tbd 
 | Technologie | Version | Verwendung |
 |:--|:-:|:--|
 | tbd | tbd | tbd |
+
+#### Beschreibung:
 
 tbd (Beschreibung in eigenen Worten)
 
