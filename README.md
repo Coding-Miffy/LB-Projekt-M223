@@ -41,7 +41,7 @@ Die Backend-Architektur folgt einem klar strukturierten Layered Architecture Pat
 
 Die Datenbank speichert alle Benutzer:innen, Events und Favoritenbeziehungen. Durch diese Aufteilung entsteht eine übersichtliche und erweiterbare Backend-Struktur, die eine klare Trennung zwischen Präsentation, Logik und Datenzugriff gewährleistet.
 
-![Layer-Architektur-Diagramm](/resources/backend-architecture-diagram.jpg)
+- [Zum Layer-Architektur-Diagramm](/resources/backend-architecture-diagram.jpg)
 
 ### ER-Diagramm
 Das Datenbankmodell bildet die zentralen Objekte der Applikation ab und basiert auf einer relationalen Struktur in PostgreSQL.
@@ -49,12 +49,12 @@ Benutzer:innen (`app_users`) und Events (`events`) stehen in einer **Many-to-Man
 
 Jedes Event kann von mehreren Benutzer:innen favorisiert werden, während ein:e Benutzer:in mehrere Events als Favoriten speichern kann. Die Verwendung einer separaten Favoriten-Tabelle ermöglicht eine flexible Erweiterung und stellt eine saubere Normalisierung der Daten sicher. Fremdschlüsselbeziehungen gewährleisten dabei die referenzielle Integrität zwischen Benutzern, Events und Favoriten.
 
-![ER-Diagramm](/resources/database-diagram.jpg)
+- [Zum ER-Diagramm](/resources/database-diagram.jpg)
 
 ### JWT-Authentifizierungs-Flow
 Die Authentifizierung der Applikation basiert auf **JSON Web Tokens (JWT)** und folgt einem **stateless Security-Modell**. Nach einem erfolgreichen Login erhält das Frontend einen signierten JWT-Token, der die Benutzeridentität und Rolle enthält. Der Token wird im Browser gespeichert und bei jedem weiteren API-Aufruf im Authorization-Header mitgesendet. Das Backend prüft den Token bei jeder Anfrage über einen Security-Filter, validiert seine Signatur und extrahiert die Benutzerinformationen. Auf diese Weise können geschützte Endpoints nur von authentifizierten und autorisierten Benutzer:innen aufgerufen werden, ohne dass das Backend eine Session verwalten muss.
 
-![JWT-Authentifizierungs-Flow](/resources/jwt-auth-flow.jpg)
+- [Zum JWT-Authentifizierungs-Flow](/resources/jwt-auth-flow.jpg)
 
 ### Technologie-Stack
 
@@ -112,20 +112,50 @@ tbd (Beschreibung in eigenen Worten)
 ## Sicherheitskonzept
 tbd
 
-## Testplan
+## Testplan Backend
+Der Backend-Testplan überprüft die wichtigsten sicherheitsrelevanten Funktionen der API. Dabei werden insbesondere Rollenrechte (`USER`/`ADMIN`) und der Zugriff auf geschützte Endpunkte automatisiert getestet.
+
+### Testfälle
+| ID | Name | Klasse | Testziel | Status |
+|:-:|:--|:--|:--|:-:|
+| BE-01 | Zugriff auf Archiv-Events für eingeloggte Benutzer:innen | `EventControllerSecurity` | Sicherstellen, dass User:innen mit Rolle USER geschlossene Events (`closed`) abrufen dürfen | ✅ |
+| BE-02 | Event-Erstellung durch Rolle USER wird blockiert | `EventControllerSecurity` | Sicherstellen, dass normale User:innen keine Events erstellen dürfen | ✅ |
+| BE-03 | Event-Erstellung durch Rolle ADMIN | `EventControllerSecurity` | Sicherstellen, dass Admins Events erfolgreich erstellen können | ✅ |
+
+### Testumgebung
+- **Test-Framework**: JUnit 5
+- **Mocking**: Mockito
+- **Datenbank**: H2 (In-Memory)
+- **HTTP-Simulation**: Spring MockMvc
+- **Testprofil**: `test`-Profil mit isolierter Konfiguration
+
+### Durchführung: BE-01 - Zugriff auf Archiv-Events für eingeloggte Benutzer:innen
+**Methode**: `getEventsByStatus_asUser_shouldReturn200()`  
+
+Ein Mock-User mit Rolle `USER` sendet einen GET-Request auf `/api/events/status/closed`. Der Test prüft, ob der Zugriff erlaubt ist und der Server mit **200 OK** antwortet.
+
+### Durchführung: BE-02 - Event-Erstellung durch Rolle USER wird blockiert
+**Methode**: `createEvent_asUser_shouldReturn403()`  
+
+Ein Mock-User mit Rolle `USER` versucht per POST-Request ein neues Event zu erstellen. Erwartet wird eine **403 Forbidden**-Antwort, da nur Admins Events anlegen dürfen.
+
+### Durchführung: BE-03 - Event-Erstellung durch Rolle ADMIN
+**Methode**: `createEvent_asAdmin_shouldReturn201()`
+
+Ein Mock-User mit Rolle `ADMIN` sendet einen gültigen POST-Request an `/api/events/create`. Der Test überprüft, dass das Event erfolgreich erstellt wird und der Server **201 Created** zurückgibt.
+
+## Testplan Frontend
 tbd
 
-### Testfälle Backend
-| ID | Name | Klasse | Testziel |
-|:-:|:--|:--|:--|
-| BE1 | tbd | tbd | tbd |
+### Testfälle
+| ID | Name | Komponente | Testziel | Status |
+|:-:|:--|:--|:--|:-:|
+| FE-01 | tbd | tbd | tbd | tbd |
 
-### Testfälle Frontend
-| ID | Name | Komponente | Testziel |
-|:-:|:--|:--|:--|
-| FE1 | tbd | tbd | tbd |
+### Testumgebung
+tbd
 
-### Durchführung der Tests
+### Durchführung: FE-01
 tbd
 
 ## Installationsanleitung
@@ -242,7 +272,11 @@ Sie trugen dazu bei, fachliche Unsicherheiten zu klären, bewährte Vorgehenswei
 ### ChatGPT
 ChatGPT wurde punktuell als Unterstützung eingesetzt, insbesondere in folgenden Bereichen:
 
-- tbd
+- **Rechtschreib- und Stilkorrektur** sowie Hilfestellung beim Verfassen von Textabschnitten der Projektdokumentation
+- Unterstützung bei der **Formulierung von JavaDoc-Kommentaren** für zentrale Klassen und Methoden
+
+### Graziano Laveder (Dozent M 223)
+- Stand bei Rückfragen zu den Anforderungen unterstützend zur Seite und half dabei, den Rahmen des Projekts zu klären und einzuordnen.
 
 ### SideQuests M 223
 Die im Rahmen des Moduls 223 bereitgestellten SideQuests dienten als wertvolle Orientierungshilfe und Grundlage für die Umsetzung:
