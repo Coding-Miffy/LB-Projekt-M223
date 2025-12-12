@@ -16,9 +16,9 @@ tbd
 ### User Stories
 Die folgenden User Stories beschreiben typische Nutzungsszenarien aus Sicht der Anwender:innen. Sie helfen, die fachlichen Anforderungen verständlich zu formulieren und den Fokus auf die Nutzerbedürfnisse zu legen.
 
-- **User Story 1**: [User Story 1 tbd](https://github.com/Coding-Miffy/LB-Projekt-M223/issues/8)
-- **User Story 2**: [User Story 2 tbd](https://github.com/Coding-Miffy/LB-Projekt-M223/issues/9)
-- **User Story 3**: [User Story 3 tbd](https://github.com/Coding-Miffy/LB-Projekt-M223/issues/10)
+- **User Story 1**: [Live-Events für Besucher:innen](https://github.com/Coding-Miffy/LB-Projekt-M223/issues/8)
+- **User Story 2**: [Events favorisieren für eingeloggte User](https://github.com/Coding-Miffy/LB-Projekt-M223/issues/9)
+- **User Story 3**: [Event-Verwaltung für Admins](https://github.com/Coding-Miffy/LB-Projekt-M223/issues/10)
 
 ### Use Case
 tbd
