@@ -1,17 +1,17 @@
 # Projektdokumentation
 **Modul**: 223   
 **Autor:innen**: Natascha Blumer & Sascha Ritter  
-**Datum**: tbd  
+**Datum**: 13.12.2025    
 **Version**: 1.0  
 
 ## Einleitung
-tbd
+Im Modul 223 erweitern wir eine bestehende Anwendung aus den Vorprojekten, um sie für mehrere Benutzer:innen gleichzeitig nutzbar zu machen. Ziel ist es, ein realitätsnahes Multi-User-System zu entwickeln, das sowohl technische als auch organisatorische Anforderungen an moderne Webanwendungen berücksichtigt.
 
 ## Projektidee
-tbd
+Die Grundidee des Projekts besteht darin, den bereits vorhandenen *EONET Natural Events Tracker* aus den Modulen 294 und 295 weiterzuentwickeln und um Multiuserfähigkeit zu ergänzen. Dazu gehören u. a. Authentifizierung, Rollenverwaltung und neue Interaktionsmöglichkeiten. Das Projekt untersucht, wie sich eine bestehende Anwendung so erweitern lässt, dass verschiedene Nutzergruppen klar voneinander getrennte Funktionen nutzen können.
 
 ## Anforderungsanalyse
-tbd
+Die Anforderungen wurden auf Basis typischer Nutzungsszenarien definiert und in Form von User Stories festgehalten. Sie bilden die Grundlage für das fachliche Verhalten der Anwendung und steuern sowohl die technische Umsetzung als auch die spätere Testabdeckung.
 
 ### User Stories
 Die folgenden User Stories beschreiben typische Nutzungsszenarien aus Sicht der Anwender:innen. Sie helfen, die fachlichen Anforderungen verständlich zu formulieren und den Fokus auf die Nutzerbedürfnisse zu legen.
@@ -21,7 +21,7 @@ Die folgenden User Stories beschreiben typische Nutzungsszenarien aus Sicht der 
 - **User Story 3**: [Event-Verwaltung für Admins](https://github.com/Coding-Miffy/LB-Projekt-M223/issues/10)
 
 ## Backend
-tbd
+Das Backend dient als zentrale Schicht der Anwendung und stellt sämtliche Funktionen über eine REST-API bereit. Es folgt einer klar strukturierten Architektur mit Controller-, Service- und Repository-Layern und bildet damit die technische Grundlage für Authentifizierung, Datenverarbeitung und Kommunikation mit dem Frontend.
 
 ### Layer-Architektur-Diagramm
 Die Backend-Architektur folgt einem klar strukturierten Layered Architecture Pattern, um Verantwortlichkeiten sauber zu trennen und die Wartbarkeit des Systems sicherzustellen. Das React-Frontend kommuniziert ausschliesslich über eine REST-API mit dem Backend, welches aus Controller-, Service- und Repository-Schichten besteht.
@@ -151,7 +151,7 @@ tbd
 tbd
 
 ## Installationsanleitung
-tbd
+Diese Anleitung beschreibt die vollständige lokale Einrichtung der Anwendung. Sie führt durch die Installation und Konfiguration von Backend und Frontend, das Aufsetzen der Datenbank sowie das Setzen aller benötigten Umgebungsvariablen, sodass das Projekt anschliessend direkt gestartet und genutzt werden kann.
 
 ### Voraussetzungen
 Für die Ausführung werden folgende Komponenten benötigt:
