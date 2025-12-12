@@ -36,13 +36,22 @@ import java.util.Map;
  * </p>
  *
  * @author Natascha Blumer
- * @version 1.1
- * @since 2025-07-20
+ * @version 2.0
+ * @since 2025-12-12
  * @see ErrorResponseDTO
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    /**
+     * Behandelt {@link AuthorizationDeniedException}, die von Spring Security
+     * ausgelöst wird, wenn ein eingeloggter Benutzer versucht, auf eine Ressource
+     * zuzugreifen, für die seine Rolle nicht die erforderlichen Berechtigungen besitzt.
+     *
+     * @param ex Die ausgelöste AuthorizationDeniedException
+     * @param request Der zugehörige HTTP-Request
+     * @return Strukturierte Fehlerantwort mit HTTP-Status 403 (Forbidden)
+     */
     @ExceptionHandler(AuthorizationDeniedException.class)
     public ResponseEntity<ErrorResponseDTO> handleAccessDenied(
             AuthorizationDeniedException ex, WebRequest request) {
