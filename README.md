@@ -44,8 +44,12 @@ Die Datenbank speichert alle Benutzer:innen, Events und Favoritenbeziehungen. Du
 ![Layer-Architektur-Diagramm](/resources/backend-architecture-diagram.jpg)
 
 ### ER-Diagramm
-tbd  
-[Diagramm]
+Das Datenbankmodell bildet die zentralen Objekte der Applikation ab und basiert auf einer relationalen Struktur in PostgreSQL.
+Benutzer:innen (`app_users`) und Events (`events`) stehen in einer **Many-to-Many-Beziehung**, die über die Tabelle `event_favorites` aufgelöst wird. Diese Tabelle speichert, welche Benutzer:innen welche Events als Favoriten markiert haben.
+
+Jedes Event kann von mehreren Benutzer:innen favorisiert werden, während ein:e Benutzer:in mehrere Events als Favoriten speichern kann. Die Verwendung einer separaten Favoriten-Tabelle ermöglicht eine flexible Erweiterung und stellt eine saubere Normalisierung der Daten sicher. Fremdschlüsselbeziehungen gewährleisten dabei die referenzielle Integrität zwischen Benutzern, Events und Favoriten.
+
+![ER-Diagramm](/resources/database-diagram.jpg)
 
 ### JWT-Authentifizierungs-Flow
 tbd  
@@ -62,6 +66,7 @@ tbd (Beschreibung in eigenen Worten)
 >[!NOTE]
 >Abschnitt "Backend" vielleicht noch nicht vollständig
 > - REST-Schnittstellen?
+> - Vielleicht die Diagramme über Links einbinden? (sind gross, brauchen viel Platz)
 
 ## Frontend
 tbd
