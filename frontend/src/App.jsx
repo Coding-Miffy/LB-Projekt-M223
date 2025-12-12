@@ -9,6 +9,7 @@ import EventsManager from './pages/EventsManager';
 import NotFoundPage from './pages/NotFoundPage';
 import Layout from './components/layout';
 import Login from './pages/Login';
+import Account from './pages/Account';
 import Forbidden from './pages/Forbidden';
 import ProtectedRoute from './components/protected-route'; 
 
@@ -21,6 +22,11 @@ function App() {
       <Route path='/' element={<Layout />}>
         <Route path="forbidden" element={<Forbidden />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/account' element={
+            <ProtectedRoute>
+              <Account />
+            </ProtectedRoute>
+        } />
         <Route path='/live-events' element={<LiveEvents />} />
         
          /* Geschützte Route für angemeldete User */

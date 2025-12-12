@@ -4,9 +4,12 @@ import { useContext } from 'react';
 import categoryEmoji from '../utils/categoryEmoji';
 // Importiere den Context, der die Kategorie-Daten global bereitstellt
 import { CategoryContext } from '../contexts/CategoryContext';
+import { useFavorites } from '../contexts/FavoritesContext';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 // Die Komponente erhält drei Props: title, date, category
-const ArchiveEventCard = ({ title, date, category }) => {
+const ArchiveEventCard = ({ title, date, category, onClick }) => {
 
     // Zugriff auf den Kategorien-Context (bereitgestellt vom CategoryProvider)
     const { categories } = useContext(CategoryContext);
@@ -24,11 +27,27 @@ const ArchiveEventCard = ({ title, date, category }) => {
     // falls kein Treffer gefunden wurde, wird die übergebene category oder "Unknown" angezeigt
     const titleText = match?.title || category || 'Unknown';
 
+    // favorites helpers
+    const { isFavorite, toggleFavorite } = useFavorites();
+    const navigate = useNavigate();
+    const { isAuthenticated } = useAuth();
+
+    const id = title + (date || '');
+    const fav = isFavorite(id);
+
     // Die eigentliche Card-UI
     return (
-        <div className="archive-card">
-            {/* Emoji prominent darstellen */}
-            <div className="emoji" style={{ fontSize: '2rem' }}>{emoji}</div>
+        <div className="archive-card" onClick={onClick} style={{ cursor: onClick ? 'pointer' : 'default' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <div>
+                    <div className="emoji">{emoji}</div>
+                </div>
+                <div>
+                    <button onClick={(e) => { e.stopPropagation(); if (!isAuthenticated) { navigate('/login'); return; } toggleFavorite({ id, title, date, category }); }} style={{ background: 'transparent', border: 'none', color: fav ? '#ff6b6b' : '#888', cursor: 'pointer', fontSize: '18px' }} aria-label="Toggle favorite">
+                        {fav ? '❤' : '♡'}
+                    </button>
+                </div>
+            </div>
 
             {/* Titel des Events */}
             <h3 className="archive-card-title">{title}</h3>

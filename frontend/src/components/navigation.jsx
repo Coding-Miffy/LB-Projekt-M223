@@ -32,16 +32,26 @@ const Navigation = () => {
                 </NavLink>
             ) : (
                 <>
-                    <span style={{
+                    <NavLink to='/account' className={({ isActive }) => isActive ? 'active' : ''} style={{
                         marginLeft: '20px',
-                        padding: '5px 10px',
+                        padding: '6px 12px',
                         background: (user?.role === 'ADMIN') ? '#dc3545' : '#007bff',
                         color: 'white',
                         borderRadius: '4px',
-                        fontSize: '14px'
+                        fontSize: '14px',
+                        textDecoration: 'none',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'flex-start',
+                        gap: '8px',
+                        minWidth: '140px',
+                        boxSizing: 'border-box',
+                        textAlign: 'left'
                     }}>
-                        👤 {user?.username ?? 'User'} ({user?.role ?? 'USER'})
-                    </span>
+                        <span style={{ marginLeft: 2 }}>👤</span>
+                        <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{user?.username ?? 'User'}</span>
+                        <span style={{ opacity: 0.9 }}>({user?.role ?? 'USER'})</span>
+                    </NavLink>
 
                     <button
                         onClick={logout}
