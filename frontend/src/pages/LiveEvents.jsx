@@ -7,14 +7,6 @@ import Map from '../components/map';
 
 import { getOpenEventsByCategory } from '../services/events-service';
 
-// Sample events for local testing when backend is unavailable
-const sampleEvents = [
-    { id: 'e-w-1', title: 'Wildfire near Sacramento', category: 'wildfires', date: '2025-11-20', latitude: 38.5816, longitude: -121.4944 },
-    { id: 'e-w-2', title: 'Wildfire in Los Angeles County', category: 'wildfires', date: '2025-11-18', latitude: 34.0522, longitude: -118.2437 },
-    { id: 'e-v-1', title: 'Etna increased activity', category: 'volcanoes', date: '2025-11-15', latitude: 37.7510, longitude: 14.9934 },
-    { id: 'e-q-1', title: 'Offshore quake Chile', category: 'earthquakes', date: '2025-10-05', latitude: -33.4489, longitude: -70.6693 },
-    { id: 'e-f-1', title: 'Flooding Rhine valley', category: 'floods', date: '2025-12-02', latitude: 50.1109, longitude: 8.6821 }
-];
 
 const LiveEvents = () => {
 
@@ -39,21 +31,18 @@ const LiveEvents = () => {
         // Events von der API holen
         getOpenEventsByCategory(selectedCategory)
             .then((res) => {
-                // If backend returns nothing, use local sample events for testing
+                // respect API response; if empty or falsy, leave events empty
                 if (!res || (Array.isArray(res) && res.length === 0)) {
-                    const fallback = sampleEvents.filter(e => e.category === selectedCategory);
-                    // if no category-specific samples, show all samples
-                    setEvents(fallback.length ? fallback : sampleEvents);
+                    setEvents([]);
                 } else {
                     setEvents(res);
                 }
             })
             .catch(err => {
                 console.error(err);
-                // On error, show sample events so the map is testable
-                const fallback = sampleEvents.filter(e => e.category === selectedCategory);
-                setEvents(fallback.length ? fallback : sampleEvents);
-                setError('Error loading events. Showing sample data.'); // Fehler speichern
+                // On error, set no events and surface an error to the user
+                setEvents([]);
+                setError('Error loading events.'); // Fehler speichern
             })
             .finally(() => setIsLoading(false)); // Ladeanzeige deaktivieren
     }, [selectedCategory]); // Abhängigkeiten
