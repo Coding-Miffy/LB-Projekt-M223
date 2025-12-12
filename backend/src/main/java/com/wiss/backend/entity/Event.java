@@ -97,7 +97,7 @@ public class Event {
      * Zählt, wie oft ein Event als Favorit markiert wurde.
      * @see #getFavoritesCount()
      */
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 0")
     private int favoritesCount = 0;
 
     /**
