@@ -52,8 +52,9 @@ Jedes Event kann von mehreren Benutzer:innen favorisiert werden, während ein:e 
 ![ER-Diagramm](/resources/database-diagram.jpg)
 
 ### JWT-Authentifizierungs-Flow
-tbd  
-[Diagramm]
+Die Authentifizierung der Applikation basiert auf **JSON Web Tokens (JWT)** und folgt einem **stateless Security-Modell**. Nach einem erfolgreichen Login erhält das Frontend einen signierten JWT-Token, der die Benutzeridentität und Rolle enthält. Der Token wird im Browser gespeichert und bei jedem weiteren API-Aufruf im Authorization-Header mitgesendet. Das Backend prüft den Token bei jeder Anfrage über einen Security-Filter, validiert seine Signatur und extrahiert die Benutzerinformationen. Auf diese Weise können geschützte Endpoints nur von authentifizierten und autorisierten Benutzer:innen aufgerufen werden, ohne dass das Backend eine Session verwalten muss.
+
+![JWT-Authentifizierungs-Flow](/resources/jwt-auth-flow.jpg)
 
 ### Technologie-Stack
 
