@@ -89,13 +89,31 @@ tbd
 [Diagramm]
 
 ### Technologie-Stack
-| Technologie | Version | Verwendung |
-|:--|:-:|:--|
-| tbd | tbd | tbd |
+
+| Technologie               | Version        | Verwendung                                     |
+|:--------------------------|:--------------:|:--------------------------------------------- |
+| TypeScript                | -              | Typisierte Programmiersprache für das Frontend (implizit unterstützt durch @types) |
+| React                     | 19.x           | Haupt-Framework für die Benutzeroberfläche     |
+| React Router DOM          | 7.x            | Client-seitiges Routing                        |
+| Axios                     | 1.x            | HTTP-Client zur API-Kommunikation              |
+| Leaflet                   | 1.x            | Anzeigen interaktiver Karten                   |
+| React-Leaflet             | 5.x            | Integration der Leaflet-Bibliothek in React    |
+| Vite                      | 6.x            | Build-Tool und lokaler Entwicklungsserver      |
+| ESLint                    | 9.x            | Überprüfung des Codes auf Best Practices       |
+| Vitest                    | 3.x            | Test-Framework für Unit Tests                 |
+| Testing Library           | 16.x           | Test-Framework für Komponenten-Tests           |
 
 #### Beschreibung:
 
-tbd (Beschreibung in eigenen Worten)
+Das Frontend wurde mit **React 19.x** entwickelt, um eine moderne, performante und wartbare Benutzeroberfläche zu ermöglichen. Mithilfe von **React Router DOM** wird ein flexibles Routing-System für client-seitige Navigation eingebettet.
+
+Zur API-Kommunikation mit dem Backend wird **Axios** eingesetzt, und für die Darstellung interaktiver Karten wird **Leaflet** in Kombination mit **React-Leaflet** verwendet. Das Styling von Karten sowie deren Integration in die Benutzeroberfläche profitiert dabei von dieser nahtlosen React-Library.
+
+Als Entwickler-Tool wird **Vite** verwendet, das schnelle Builds und Live-Reload-Funktionen für die Entwicklung bietet. Für die Codequalität und Einhaltung von Best Practices sorgt **ESLint**.
+
+Die Tests des Frontends stützen sich auf **Vitest**, ein modernes Unit-Test-Framework, sowie auf die **Testing Library**, die pragmatische Werkzeuge für das Testen von Komponenten bereitstellt.
+
+Durch die Verwendung von **TypeScript-Typdefinitionspaketen (@types)** wird sichergestellt, dass die Entwicklung typsicher ist, auch wenn der Typsicherheit explizit kein Fokus auf **TypeScript** gelegt wird.
 
 ## Sicherheitskonzept
 Die Anwendung nutzt ein **JWT-basiertes Security-Modell**, um Benutzer eindeutig zu authentifizieren und Rollen sauber zu trennen. Passwörter werden mit **BCrypt** gehasht gespeichert, sodass keine Klartextdaten in der Datenbank liegen. Beim Login erstellt das Backend über den `JwtService` ein signiertes JWT, das Benutzername, Rolle und Ablaufzeit enthält. Der Token wird im Frontend gespeichert und bei jedem Request automatisch per **Authorization-Header** mitgesendet.
@@ -270,7 +288,78 @@ mvn spring-boot:run
 Die Anwendung ist anschliessend unter [http://localhost:8080](http://localhost:8080) erreichbar.
 
 ### Frontend installieren
-tbd
+
+#### Voraussetzungen
+Für die Ausführung und Entwicklung des Frontends werden folgende Komponenten benötigt:
+- **Node.js** (empfohlene LTS-Version)
+- **npm** (wird automatisch mit Node.js installiert)
+- **Git** (zum Klonen des Repositories)
+
+#### Projekt vorbereiten
+
+1. **Projektverzeichnis klonen**  
+   Wechsle in das gewünschte Verzeichnis und klone das Repository:
+   ```bash
+   git clone https://github.com/Coding-Miffy/LB-Projekt-M223.git
+   cd LB-Projekt-M223/frontend
+   ```
+
+2. **Abhängigkeiten installieren**  
+   Stelle sicher, dass alle notwendigen Abhängigkeiten aus dem `package.json` installiert werden:
+   ```bash
+   npm install
+   ```
+
+#### Entwicklungsserver starten
+Starte den Entwicklungsserver mit folgendem Befehl:
+```bash
+npm run dev
+```
+Anschließend ist das Frontend unter [http://localhost:5173](http://localhost:5173) verfügbar (Standard-Port von Vite).
+
+#### Build für die Produktion erstellen
+Um einen optimierten Build für die Produktion zu erstellen, führe den folgenden Befehl aus:
+```bash
+npm run build
+```
+Die optimierten Dateien werden im Ordner `dist/` gespeichert und können anschließend z. B. mit einem Webserver bereitgestellt werden.
+
+#### Vorschau des Builds starten
+Um den Build vor der Bereitstellung zu testen, nutze diesen Befehl:
+```bash
+npm run preview
+```
+Der optimierte Build wird auf einem lokalen Vorschau-Server bereitgestellt.
+
+#### Weitere Skripte
+- **Codequalität sicherstellen**:
+  ```bash
+  npm run lint
+  ```
+  Dieser Befehl führt **ESLint** aus, um den Code auf Best Practices und Richtlinien zu prüfen.
+
+- **Tests ausführen**:
+  ```bash
+  npm run test
+  ```
+  Dieser Befehl führt die Unit- und Komponenten-Tests mit **Vitest** aus.
+
+#### Empfohlene IDE
+Für die Entwicklung des Frontends wird **Visual Studio Code** empfohlen.  
+Folgende Plugins können zusätzlich helfen:
+- ESLint: Für die Überprüfung des Codes.
+- React Developer Tools: Debugging von React-Komponenten.
+
+#### Beispiel-Konfiguration
+Optional kannst du Umgebungsvariablen in einer `.env`-Datei im `frontend`-Ordner hinterlegen. Die Datei könnte z. B. so aussehen:
+
+```env
+VITE_API_BASE_URL=http://localhost:8080/api
+```
+Hierbei ersetzt du den Wert von `VITE_API_BASE_URL` durch die URL des Backend-Servers.
+
+>[!TIP]
+>Sichere sensible Daten (wie API-Keys) nicht direkt im Code. Nutzen stattdessen `.env`-Dateien, die aus der Versionskontrolle ausgeschlossen werden können.
 
 ## Dokumentation
 Die Applikation verfügt über zwei Arten technischer Dokumentation: **Swagger / OpenAPI** und **JavaDoc**. Beide werden nachfolgend kurz erläutert.
