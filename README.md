@@ -155,18 +155,43 @@ Ein Mock-User mit Rolle `USER` versucht per POST-Request ein neues Event zu erst
 Ein Mock-User mit Rolle `ADMIN` sendet einen gültigen POST-Request an `/api/events/create`. Der Test überprüft, dass das Event erfolgreich erstellt wird und der Server **201 Created** zurückgibt.
 
 ## Testplan Frontend
-tbd
+Der Frontend-Testplan überprüft die grundlegenden Funktionalitäten und die Benutzerinteraktion mit den wichtigsten Komponenten der Anwendung. Dabei wird sichergestellt, dass Formulare korrekt validieren, die Navigation je nach Benutzerrolle angepasst wird und Events zuverlässig erstellt werden können.
 
 ### Testfälle
-| ID | Name | Komponente | Testziel | Status |
-|:-:|:--|:--|:--|:-:|
-| FE-01 | tbd | tbd | tbd | tbd |
+| ID     | Name                                        | Komponente         | Testziel                                                                 | Status |
+|:------:|:------------------------------------------ |:------------------ |:----------------------------------------------------------------------- |:-----: |
+| FE-01  | Validierung und Login                      | `LoginForm`        | Überprüfen der Formularvalidierung und Aufruf der `onLogin`-Funktion.   | ✅     |
+| FE-02  | Dynamische Navigation                      | `Navigation`       | Anzeigen von Login-Link oder Benutzerinfos abhängig von der Authentifizierung. | ✅     |
+| FE-03  | Validierung und Event-Erstellung           | `CreateEventForm`  | Prüfen der Formularvalidierung und Übergabe der Event-Daten an `onEventSubmit`. | ✅     |
 
 ### Testumgebung
-tbd
+- **Test-Framework:** Vitest
+- **Testing Library:** React Testing Library
+- **Utility:** jsdom für DOM-Tests
+- **Testprofil:** Lokale Entwicklungsumgebung mit isolierter Konfiguration
 
-### Durchführung: FE-01
-tbd
+### Durchführung: FE-01 - Validierung und Login
+**Komponente:** `LoginForm`  
+**Methode:** `shows validation errors and calls onLogin when form valid()`  
+
+In diesem Test wird überprüft, ob das Login-Formular korrekt validiert und auf Benutzereingaben reagiert. Zunächst wird ein Absenden ohne Eingaben simuliert. Erwartung: Fehlermeldungen für fehlende Felder werden angezeigt, und die `onLogin`-Funktion wird nicht aufgerufen. Danach wird das Formular ausgefüllt, und die Funktion `onLogin` wird geprüft. Erwartung: Sie wird mit den korrekten Eingabewerten aufgerufen.
+
+### Durchführung: FE-02 - Dynamische Navigation
+**Komponente:** `Navigation`  
+**Methode:** `shows Login link when not authenticated()`  
+**Methode:** `shows user info and logout when authenticated and calls logout()`  
+
+Dieser Test überprüft die Navigationsleiste unter verschiedenen Authentifizierungszuständen. Erwartung: Nicht-authentifizierte Benutzer sehen einen Login-Link, während authentifizierte Benutzer ihren Namen, ihre Rolle und einen Logout-Button angezeigt bekommen. Das Klicken auf den Logout-Button ruft die `logout`-Funktion einmalig auf.
+
+### Durchführung: FE-03 - Validierung und Event-Erstellung
+**Komponente:** `CreateEventForm`  
+**Methode:** `validates required fields and calls onEventSubmit with event data()`  
+
+Hier wird das Formular zur Erstellung von Events getestet. Erwartung: Beim Absenden eines leeren Formulars werden Fehlermeldungen für fehlende Felder angezeigt, und die Funktion `onEventSubmit` wird nicht aufgerufen. Nach korrektem Ausfüllen wird geprüft, ob die `onEventSubmit`-Funktion mit den eingegebenen Event-Daten aufgerufen wird.
+
+---
+
+Dieser Abschnitt stellt die wichtigsten Tests des Frontends dar und orientiert sich an einer klaren Struktur, die für eine gute Nachvollziehbarkeit sorgt. Falls die Testfälle oder Details erweitert werden sollen, lass es mich wissen!  
 
 ## Installationsanleitung
 Diese Anleitung beschreibt die vollständige lokale Einrichtung der Anwendung. Sie führt durch die Installation und Konfiguration von Backend und Frontend, das Aufsetzen der Datenbank sowie das Setzen aller benötigten Umgebungsvariablen, sodass das Projekt anschliessend direkt gestartet und genutzt werden kann.
