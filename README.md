@@ -77,8 +77,7 @@ Der Datenbankzugriff erfolgt über **Spring Data JPA** mit **Hibernate** als ORM
 tbd
 
 ### Component-Hierarchie-Diagramm
-tbd  
-[Diagramm]
+- [Zum Component-Hierarchie-Diagramm](/resources/component-architecture-diagram.jpg)
 
 ### State-Management-Flow
 tbd  
