@@ -9,6 +9,41 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+/**
+ * <h2>
+ *     Service für Benutzerverwaltung und Authentifizierung
+ * </h2>
+ *
+ * <p>
+ *     Diese Serviceklasse enthält die zentrale Geschäftslogik für Benutzerkonten.
+ *     Sie übernimmt Aufgaben wie Registrierung, Validierung, Passwort-Hashing
+ *     sowie Authentifizierung anhand von Username und Passwort.
+ *     Der Service wird vom {@link com.wiss.backend.controller.AuthController}
+ *     sowie von Spring Security genutzt.
+ * </p>
+ *
+ * <h3>Hauptfunktionen:</h3>
+ * <ul>
+ *     <li>Registrieren neuer Benutzer (inkl. Validierung & Passwort-Hashing)</li>
+ *     <li>Benutzersuche per Username oder Email</li>
+ *     <li>Passwortvalidierung für Login-Vorgänge</li>
+ *     <li>Verfügbarkeitsprüfung von Usernamen und Emails</li>
+ * </ul>
+ *
+ * <p>
+ *     Die Klasse ist mit {@link Transactional} annotiert, sodass alle
+ *     Operationen atomar ausgeführt werden. Dadurch werden Race Conditions
+ *     bei parallelen Registrierungen vermieden.
+ * </p>
+ *
+ * @author Natascha Blumer
+ * @version 1.0
+ * @since 2025-12-12
+ *
+ * @see AppUserRepository
+ * @see AppUser
+ * @see Role
+ */
 @Service
 @Transactional
 public class AppUserService {
@@ -16,20 +51,35 @@ public class AppUserService {
     private final AppUserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     * Konstruktor zur Initialisierung der benötigten Komponenten.
+     *
+     * @param userRepository Repository zum Zugriff auf Benutzerentitäten
+     * @param passwordEncoder BCrypt-Encoder zum sicheren Hashen von Passwörtern
+     */
     public AppUserService(AppUserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     /**
-     * Registriert einen neuen User.
+     * Registriert einen neuen Benutzer.
      *
-     * @param username Der gewünschte Username
-     * @param email Die Email-Adresse
-     * @param rawPassword Das Klartext-Passwort (wird gehashed)
-     * @param role Die Rolle (ADMIN oder USER)
-     * @return Der gespeicherte User mit generierter ID
-     * @throws IllegalArgumentException wenn Username/Email bereits existiert
+     * <p>
+     *     Der Vorgang umfasst:
+     * </p>
+     * <ul>
+     *     <li>Validierung der Eindeutigkeit von Username und Email</li>
+     *     <li>Hashing des Passworts mit BCrypt</li>
+     *     <li>Persistieren der neuen Benutzerentität</li>
+     * </ul>
+     *
+     * @param username gewünschter Username
+     * @param email    Email-Adresse des neuen Benutzers
+     * @param rawPassword Passwort im Klartext (wird gehasht gespeichert)
+     * @param role     gewünschte Benutzerrolle
+     * @return gespeicherter Benutzer als {@link AppUser}
+     * @throws IllegalArgumentException wenn Username oder Email bereits existieren
      */
     public AppUser registerUser(String username, String email, String rawPassword, Role role) {
 
@@ -58,34 +108,40 @@ public class AppUserService {
     }
 
     /**
-     * Findet einen User by Username.
+     * Sucht einen User anhand des Usernames.
      *
-     * @param username Der Username
-     * @return Optional mit User oder empty
+     * @param username Username des gesuchten Benutzers
+     * @return Optional mit Benutzer oder empty, falls nicht vorhanden
      */
     public Optional<AppUser> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
     /**
-     * Findet einen User by Email.
+     * Sucht einen User anhand der Email-Adresse.
      *
-     * @param email Die Email
-     * @return Optional mit User oder empty
+     * @param email Email des gesuchten Benutzers
+     * @return Optional mit Benutzer oder empty
      */
     public Optional<AppUser> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     /**
-     * Authentifiziert einen User.
+     * Authentifiziert einen User anhand Username und Passwort.
      *
-     * @param username Der Username
-     * @param rawPassword Das eingegebene Passwort
-     * @return Optional mit User wenn Login erfolgreich, sonst empty
+     * <p>
+     *     Diese Methode prüft mittels BCrypt, ob das eingegebene Passwort
+     *     dem gespeicherten Hash entspricht.
+     * </p>
+     *
+     * @param username Username des Benutzers
+     * @param rawPassword eingegebenes Passwort im Klartext
+     * @return Optional mit Benutzer bei Erfolg, sonst empty
      */
     public Optional<AppUser> authenticateUser(String username, String rawPassword) {
-        // User suchen
+
+        // User suchenanhand Username suchen
         Optional<AppUser> userOpt = userRepository.findByUsername(username);
 
         if (userOpt.isPresent()) {
@@ -101,10 +157,10 @@ public class AppUserService {
     }
 
     /**
-     * Hilfsmethode: Email-Validation.
+     * Prüft, ob eine Email-Adresse syntaktisch gültig ist.
      *
-     * @param email Die zu prüfende Email
-     * @return true wenn Email-Format gültig
+     * @param email zu prüfende Email-Adresse
+     * @return true, wenn Format plausibel, sonst false
      */
     private boolean isValidEmail(String email) {
         return email != null &&
@@ -113,20 +169,20 @@ public class AppUserService {
     }
 
     /**
-     * Prüft ob ein Username verfügbar ist.
+     * Prüft, ob ein Username bereits vergeben ist.
      *
-     * @param username Der zu prüfende Username
-     * @return true wenn verfügbar
+     * @param username Username zur Prüfung
+     * @return true, wenn Username bereits existiert
      */
     public boolean isUsernameAvailable(String username) {
         return userRepository.existsByUsername(username);
     }
 
     /**
-     * Prüft ob eine Email verfügbar ist.
+     * Prüft, ob eine Email bereits registriert ist.
      *
-     * @param email Die zu prüfende Email
-     * @return true wenn verfügbar
+     * @param email Email-Adresse zur Prüfung
+     * @return true, wenn Email bereits existiert
      */
     public boolean isEmailAvailable(String email) {
         return userRepository.existsByEmail(email);

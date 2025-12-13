@@ -4,38 +4,42 @@
  * </h2>
  *
  * <p>
- *     Dieses Package enthält sämtliche Data Transfer Objects (DTOs), die zur Kommunikation
- *     zwischen Client (z. B. Frontend) und Server verwendet werden. DTOs dienen der
- *     Kapselung von Daten, die über REST-Endpunkte empfangen oder zurückgegeben werden.
- *     Sie bilden eine schlanke und sichere Schnittstelle zur Präsentationsschicht und
- *     entkoppeln diese von den internen Entitäten und Geschäftslogiken.
+ *     Dieses Package enthält sämtliche Data Transfer Objects (DTOs), die für die
+ *     Kommunikation zwischen Client (z. B. dem React-Frontend) und dem Spring-Boot-Backend
+ *     verwendet werden. DTOs bilden eine sichere und schlanke Schnittstelle und
+ *     entkoppeln die API vollständig vom Persistenzmodell
+ *     ({@link com.wiss.backend.entity}).
  * </p>
  *
  * <h3>
- *     Enthaltene Klassen:
+ *     Enthaltene DTO-Klassen::
  * </h3>
  * <ul>
- *     <li>{@link com.wiss.backend.dto.EventDTO} – Repräsentiert ein Naturereignis für die Anzeige im Frontend</li>
- *     <li>{@link com.wiss.backend.dto.EventFormDTO} – Eingabeobjekt für das Erfassen oder Bearbeiten eines Events im Frontend. Validiert Formulardaten und kann in ein {@link com.wiss.backend.dto.EventDTO} umgewandelt werden.</li>
- *     <li>{@link com.wiss.backend.dto.ErrorResponseDTO} – Einheitliches Format für Fehlermeldungen, z. B. bei Validierungsfehlern oder Ausnahmen</li>
+ *     <li>{@link com.wiss.backend.dto.LoginRequestDTO} – Eingabemodell für Login-Daten</li>
+ *     <li>{@link com.wiss.backend.dto.LoginResponseDTO} – Rückgabeobjekt nach erfolgreicher Authentifizierung (inkl. JWT)</li>
+ *     <li>{@link com.wiss.backend.dto.RegisterRequestDTO} – Eingabeobjekt für Benutzerregistrierungen</li>
+ *     <li>{@link com.wiss.backend.dto.RegisterResponseDTO} – Ausgabeobjekt für erfolgreiche Registrierungen</li>
+ *     <li>{@link com.wiss.backend.dto.EventDTO} – DTO zur Anzeige und Rückgabe eines Naturereignisses</li>
+ *     <li>{@link com.wiss.backend.dto.EventFormDTO} – Eingabe-DTO für Formulare zum Erstellen oder Bearbeiten von Events</li>
+ *     <li>{@link com.wiss.backend.dto.ErrorResponseDTO} – Einheitliches Fehlerformat für alle API-Fehler</li>
  * </ul>
  *
  * <h3>
  *     Validierung:
  * </h3>
  * <p>
- *     Alle Form- und Rückgabeobjekte sind mit Bean Validation Annotationen versehen
- *     (z. B. {@code @NotNull}, {@code @Size}, {@code @PastOrPresent}),
- *     um Eingaben frühzeitig serverseitig abzufangen.
+ *     Viele DTOs sind mit Bean Validation versehen (z. B. {@code @NotBlank}, {@code @Email}, {@code @Size}),
+ *     um ungültige Eingaben möglichst früh serverseitig zu erkennen.
  * </p>
  *
  * <h3>
- *     Schnittstellen und Konvertierung:
+ *     Rollen im Architekturkonzept:
  * </h3>
- * <p>
- *     Das Package enthält Konvertierungsmethoden zwischen den Form- und Anzeige-DTOs,
- *     z. B. {@code toEventDTO()} und {@code fromEventDTO()}.
- * </p>
+ * <ul>
+ *     <li>Werden von den Controllern als Eingabemodell und/oder Ausgabemodell verwendet.</li>
+ *     <li>Ermöglichen eine klare Trennung zwischen Datenbankmodellen und API-Modellen.</li>
+ *     <li>Schützen interne Entitäten vor ungewollter Serialisierung und Manipulation.</li>
+ * </ul>
  *
  * <h3>
  *     Zugehörige Packages:
@@ -47,7 +51,7 @@
  * </ul>
  *
  * @author Natascha Blumer
- * @version 1.0
- * @since 2025-07-19
+ * @version 2.0
+ * @since 2025-12-12
  */
 package com.wiss.backend.dto;

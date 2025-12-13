@@ -8,6 +8,9 @@ import com.wiss.backend.entity.AppUser;
 import com.wiss.backend.entity.Role;
 import com.wiss.backend.service.AppUserService;
 import com.wiss.backend.service.JwtService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +20,32 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * <h2>
+ *     Authentifizierungs- und Registrierungs-Controller
+ * </h2>
+ * <p>
+ *     Stellt Endpunkte für die Benutzerregistrierung, den Login sowie
+ *     Verfügbarkeitsprüfungen von Username und Email bereit.
+ *     Beim erfolgreichen Login wird ein JWT-Token generiert, der im Frontend
+ *     gespeichert und für weitere Requests verwendet werden kann.
+ * </p>
+ *
+ * @author Natascha Blumer
+ * @version 1.0
+ * @since 2025-12-12
+ *
+ * @see com.wiss.backend.dto.LoginRequestDTO
+ * @see com.wiss.backend.dto.LoginResponseDTO
+ * @see com.wiss.backend.dto.RegisterRequestDTO
+ * @see com.wiss.backend.dto.RegisterResponseDTO
+ * @see com.wiss.backend.service.AppUserService
+ * @see com.wiss.backend.service.JwtService
+ */
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "http://localhost:5173")
+@Tag(name = "Authentifizierung", description = "Endpunkte für Registrierung, Login und Verfügbarkeitsprüfungen von Benutzerkonten.")
 public class AuthController {
 
     private final AppUserService appUserService;
@@ -31,15 +57,20 @@ public class AuthController {
     }
 
     /**
-     * POST /api/auth/register
+     * Registriert einen neuen User mit der Default-Rolle {@link Role#USER}.
      *
-     * Registriert einen neuen User.
-     *
-     * @Valid triggert die Bean Validation
-     * @RequestBody parsed JSON zu Java Object
+     * @param request Registrierungsdaten (Username, Email, Passwort)
+     * @return Erfolgsantwort mit {@link RegisterResponseDTO} oder
+     *         Fehlermeldung bei Validierungs- / Business-Fehlern
      */
-
     @PostMapping("/register")
+    @Operation(
+            summary = "Neuen Benutzer registrieren",
+            description = "Legt einen neuen Benutzer mit der Rolle USER an, inkl. BCrypt-Hashing des Passworts."
+    )
+    @ApiResponse(responseCode = "200", description = "Registrierung erfolgreich")
+    @ApiResponse(responseCode = "400", description = "Username oder Email bereits vergeben / ungültige Daten")
+    @ApiResponse(responseCode = "500", description = "Interner Fehler bei der Registrierung")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequestDTO request) {
         try {
             // Service Layer aufrufen
@@ -76,14 +107,20 @@ public class AuthController {
     }
 
     /**
-     * POST /api/auth/login
+     * Authentifiziert einen Benutzer anhand Benutzername oder Email und Passwort
+     * und gibt bei Erfolg ein JWT-Token zurück.
      *
-     * Authentifiziert einen User und gibt JWT Token zurück.
-     *
-     * @Valid triggert die Bean Validation
-     * @RequestBody parsed JSON zu Java Object
+     * @param request Login-Daten (Username/Email + Passwort)
+     * @return {@link LoginResponseDTO} mit JWT-Token oder 401/500-Fehler
      */
     @PostMapping("/login")
+    @Operation(
+            summary = "Benutzer einloggen",
+            description = "Validiert Benutzername/Email und Passwort und gibt bei Erfolg ein JWT-Token zurück."
+    )
+    @ApiResponse(responseCode = "200", description = "Login erfolgreich, Token generiert")
+    @ApiResponse(responseCode = "401", description = "Ungültige Anmeldedaten")
+    @ApiResponse(responseCode = "500", description = "Interner Fehler bei der Authentifizierung")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDTO request) {
         try {
             // User finden (Username oder Email)
@@ -145,11 +182,17 @@ public class AuthController {
     }
 
     /**
-     * GET /api/auth/check-username/{username}
+     * Prüft, ob ein bestimmter Username verfügbar ist.
      *
-     * Prüft, ob ein Username verfügbar ist.
+     * @param username Der gewünschte Username
+     * @return JSON mit Username und Boolean-Feld <code>available</code>
      */
     @GetMapping("/check-username/{username}")
+    @Operation(
+            summary = "Username auf Verfügbarkeit prüfen",
+            description = "Prüft, ob ein gewünschter Username bereits vergeben ist."
+    )
+    @ApiResponse(responseCode = "200", description = "Verfügbarkeitsstatus erfolgreich ermittelt")
     public ResponseEntity<Map<String, Object>> checkUsername(@PathVariable String username) {
         boolean available = appUserService.isUsernameAvailable(username);
 
@@ -161,11 +204,17 @@ public class AuthController {
     }
 
     /**
-     * GET /api/auth/check-email/{email}
+     * Prüft, ob eine bestimmte Email-Adresse bereits registriert ist.
      *
-     * Prüft ob eine Email verfügbar ist.
+     * @param email Die zu prüfende Email-Adresse
+     * @return JSON mit Email und Boolean-Feld <code>available</code>
      */
     @GetMapping("/check-email/{email}")
+    @Operation(
+            summary = "Email auf Verfügbarkeit prüfen",
+            description = "Prüft, ob eine Email-Adresse bereits registriert ist."
+    )
+    @ApiResponse(responseCode = "200", description = "Verfügbarkeitsstatus erfolgreich ermittelt")
     public ResponseEntity<Map<String, Object>> checkEmail(@PathVariable String email) {
         boolean available = appUserService.isEmailAvailable(email);
 
@@ -177,11 +226,16 @@ public class AuthController {
     }
 
     /**
-     * GET /api/auth/test
+     * Einfacher Health-Check-Endpunkt für den Auth-Controller.
      *
-     * Prüft ob der Controller erreichbar ist.
+     * @return Textantwort, falls der Controller erreichbar ist
      */
     @GetMapping("/test")
+    @Operation(
+            summary = "Auth-Controller testen",
+            description = "Gibt einen einfachen Text zurück, um die Erreichbarkeit des Auth-Controllers zu prüfen."
+    )
+    @ApiResponse(responseCode = "200", description = "Auth-Controller ist erreichbar")
     public ResponseEntity<String> test() {
         return ResponseEntity.ok("Auth Controller funktioniert!");
     }

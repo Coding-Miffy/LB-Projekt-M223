@@ -19,6 +19,54 @@ import java.time.LocalDate;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/**
+ * <h2>
+ *     Security-Tests für den EventController
+ * </h2>
+ *
+ * <p>
+ *     Diese Testklasse überprüft sämtliche sicherheitsrelevanten Zugriffsbeschränkungen
+ *     des {@link com.wiss.backend.controller.EventController}.
+ *     Getestet wird das Verhalten der REST-Endpunkte abhängig vom Authentifizierungs-
+ *     und Berechtigungsstatus des aufrufenden Benutzers.
+ * </p>
+ *
+ * <h3>Ziele der Testklasse:</h3>
+ * <ul>
+ *     <li>Sicherstellen, dass ungeauthentifizierte Anfragen korrekt blockiert werden (HTTP 403).</li>
+ *     <li>Überprüfen, dass Nutzer:innen mit Rolle <code>USER</code> nur lesenden Zugriff erhalten.</li>
+ *     <li>Verifizieren, dass Nutzer:innen mit Rolle <code>ADMIN</code> erweiterte Rechte wie Erstellen und Löschen besitzen.</li>
+ *     <li>Absicherung der Spring-Security-Konfiguration durch MockMvc-Integrationstests.</li>
+ * </ul>
+ *
+ * <h3>Testaufbau:</h3>
+ * <p>
+ *     Vor jedem Test wird ein einzelnes Test-Event in einer isolierten H2-Datenbank angelegt.
+ *     Die Tests verwenden <code>@WithMockUser</code>, um unterschiedliche Rollen zu simulieren.
+ * </p>
+ *
+ * <h3>Verwendete Technologien:</h3>
+ * <ul>
+ *     <li><b>SpringBootTest</b> & MockMvc für End-to-End-Test der Webschicht</li>
+ *     <li><b>H2-Datenbank</b> durch <code>@ActiveProfiles("test")</code></li>
+ *     <li><b>Spring Security Test</b> zur Rollen-Simulation</li>
+ * </ul>
+ *
+ * <h3>Geprüfte Szenarien:</h3>
+ * <ul>
+ *     <li>Zugriff ohne Login → 403 Forbidden</li>
+ *     <li>Zugriff als USER → nur lesende Endpunkte erlaubt</li>
+ *     <li>Zugriff als ADMIN → CRUD vollständig erlaubt</li>
+ * </ul>
+ *
+ * @author Natascha Blumer
+ * @version 1.0
+ * @since 2025-12-12
+ *
+ * @see com.wiss.backend.controller.EventController
+ * @see org.springframework.security.test.context.support.WithMockUser
+ * @see com.wiss.backend.repository.EventRepository
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")

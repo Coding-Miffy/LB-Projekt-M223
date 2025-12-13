@@ -1,34 +1,48 @@
 /**
  * <h2>
- *     Persistenzmodell für Naturereignisse
+ *     Persistenzmodell der Anwendung (JPA Entities)
  * </h2>
  *
  * <p>
- *     Dieses Paket enthält die JPA-Entities der Anwendung.
- *     Die Klassen in diesem Package repräsentieren die Datenbanktabellen
- *     und werden von JPA/Hibernate für die automatische Persistierung verwendet.
- *     Jede Klasse ist mit {@link jakarta.persistence.Entity} annotiert und definiert
- *     die Struktur der entsprechenden Tabelle inklusive Felder, Constraints
- *     und Relationen.
+ *     Dieses Paket enthält sämtliche JPA-Entity-Klassen der Anwendung.
+ *     Die Klassen repräsentieren das fachliche Datenmodell und werden von
+ *     JPA/Hibernate genutzt, um die entsprechenden Datenbanktabellen zu erzeugen,
+ *     zu verwalten und mit ihnen zu interagieren.
  * </p>
  *
- * <h3>
- *     Enthaltene Komponenten:
- * </h3>
+ * <h3>Aufgabe des Pakets:</h3>
  * <ul>
- *     <li>{@link com.wiss.backend.entity.Event} – Entity-Klasse zur Abbildung eines
- *     Naturereignisses mit ID, Titel, Datum, Kategorie, Koordinaten und Status.</li>
+ *     <li>Abbildung der Datenbankstrukturen (Tabellen, Spalten, Relationen)</li>
+ *     <li>Persistierung und Laden von Objekten über Hibernate</li>
+ *     <li>Definition von fachlich relevanten Entitäten wie User, Events und Favoriten</li>
+ * </ul>
+ *
+ * <h3>Enthaltene Entities:</h3>
+ * <ul>
+ *     <li>{@link com.wiss.backend.entity.AppUser}
+ *         – Repräsentiert eine Benutzer:in inkl. Login-Daten, Rolle und Versionierung.</li>
+ *
+ *     <li>{@link com.wiss.backend.entity.Event}
+ *         – Repräsentiert ein Naturereignis mit Titel, Datum, Koordinaten,
+ *         Kategorie, Status und Favoritenanzahl.</li>
+ *
+ *     <li>{@link com.wiss.backend.entity.EventFavorite}
+ *         – Modelliert die Beziehung "User favorisiert Event". Dient zur Verwaltung
+ *         einer N:M-ähnlichen Relation im System.</li>
+ *
+ *     <li>{@link com.wiss.backend.entity.Role}
+ *         – Enum mit den verfügbaren Systemrollen (ADMIN, USER).</li>
  * </ul>
  *
  * <p>
- *     Die Entity-Klassen werden ausschliesslich im Backend verwendet und nicht direkt
- *     an das Frontend übermittelt. Für den Datenaustausch mit dem Client kommen separate
- *     {@link com.wiss.backend.dto DTO}-Klassen zum Einsatz, um das Persistenzmodell vom
- *     Transportmodell klar zu trennen.
+ *     Die Entities werden ausschliesslich im Backend genutzt und niemals direkt an das
+ *     Frontend gesendet. Für den Austausch mit dem Client dienen eigenständige
+ *     {@link com.wiss.backend.dto DTO}-Klassen, um das Persistenzmodell strikt vom
+ *     Transportmodell zu trennen.
  * </p>
  *
  * @author Natascha Blumer
- * @version 1.0
- * @since 2025-07-18
+ * @version 2.0
+ * @since 2025-12-12
  */
 package com.wiss.backend.entity;

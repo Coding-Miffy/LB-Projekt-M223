@@ -2,40 +2,61 @@
  * <h2>
  *     Controller-Layer
  * </h2>
+ *
  * <p>
- *     Dieses Package enthält alle REST-Endpunkte zur Verwaltung von Naturereignissen im Rahmen
- *     des NASA EONET Event-Trackers. Die Controller dienen als Schnittstelle zwischen Client-Anfragen
- *     (z. B. Frontend) und der zugrunde liegenden Geschäftslogik im Service-Layer.
+ *     Dieses Package enthält alle REST-Controller der Anwendung. Sie bilden die zentrale
+ *     Schnittstelle zwischen dem Client (z. B. React-Frontend) und der Geschäftslogik im
+ *     Service-Layer. Die Controller validieren Eingaben, rufen Services auf und geben
+ *     strukturierte DTOs an den Client zurück.
  * </p>
  *
  * <h3>
  *     Enthaltene Controller:
  * </h3>
  * <ul>
- *     <li>{@link com.wiss.backend.controller.EventController} – Hauptcontroller für CRUD, Filter und Formulare</li>
+ *     <li>{@link com.wiss.backend.controller.AuthController} –
+ *         Verantwortlich für Registrierung, Login, JWT-Generierung und Verfügbarkeitsprüfungen.</li>
+ *
+ *     <li>{@link com.wiss.backend.controller.EventController} –
+ *         Hauptcontroller für Events, inklusive CRUD, Filterabfragen, Form-DTOs und Statistiken.</li>
+ *
+ *     <li>{@link com.wiss.backend.controller.EventFavoriteController} –
+ *         Endpunkte zum Markieren von Favoriten sowie zum Auslesen des Favoritenzählers.</li>
  * </ul>
  *
  * <h3>
  *     Verwendete Technologien:
  * </h3>
  * <ul>
- *     <li>Spring Web (REST)</li>
- *     <li>Bean Validation (@Valid)</li>
- *     <li>Swagger/OpenAPI für API-Dokumentation</li>
- *     <li>Globale Fehlerbehandlung via {@code @ControllerAdvice}</li>
+ *     <li>Spring Web – Bereitstellung von REST-Endpunkten</li>
+ *     <li>Spring Security – Zugriffskontrolle mittels Rollen und JWT</li>
+ *     <li>Bean Validation – Validierung eingehender DTOs</li>
+ *     <li>Swagger/OpenAPI – Automatische API-Dokumentation</li>
  * </ul>
  *
  * <h3>
  *     Fehlerverarbeitung:
  * </h3>
  * <p>
- *     Alle auftretenden Fehler werden vom zentralen {@link com.wiss.backend.exception.GlobalExceptionHandler}
- *     verarbeitet und im standardisierten {@link com.wiss.backend.dto.ErrorResponseDTO} Format an den Client zurückgegeben.
+ *     Alle Controller werden durch den globalen
+ *     {@link com.wiss.backend.exception.GlobalExceptionHandler} überwacht.
+ *     Fehler werden einheitlich im Format des
+ *     {@link com.wiss.backend.dto.ErrorResponseDTO} zurückgegeben.
  * </p>
  *
+ * <h3>
+ *     Zugehörige Schichten:
+ * </h3>
+ * <ul>
+ *     <li>{@link com.wiss.backend.service} – enthält die Geschäftslogik</li>
+ *     <li>{@link com.wiss.backend.repository} – Datenzugriffsschicht</li>
+ *     <li>{@link com.wiss.backend.dto} – Ein- und Ausgabestrukturen der API</li>
+ *     <li>{@link com.wiss.backend.entity} – Persistenzmodell</li>
+ * </ul>
+ *
  * @author Natascha Blumer
- * @version 1.0
- * @since 2025-07-20
+ * @version 2.0
+ * @since 2025-12-12
  *
  * @see com.wiss.backend.service.EventService
  * @see com.wiss.backend.repository.EventRepository

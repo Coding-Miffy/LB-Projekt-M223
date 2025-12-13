@@ -1,5 +1,39 @@
 package com.wiss.backend.dto;
 
+/**
+ * <h2>
+ *     DTO für Login-Antworten (JWT Response)
+ * </h2>
+ *
+ * <p>
+ *     Dieses Data Transfer Object wird nach einem erfolgreichen Login
+ *     an das Frontend zurückgegeben. Es enthält den generierten JWT,
+ *     Benutzerinformationen sowie Metadaten zur Token-Gültigkeit.
+ * </p>
+ *
+ * <h3>
+ *     Enthaltene Informationen:
+ * </h3>
+ * <ul>
+ *     <li>JWT-Token (im Bearer-Format)</li>
+ *     <li>User-ID, Username und Email</li>
+ *     <li>Benutzerrolle (z. B. <code>ADMIN</code>, <code>USER</code>)</li>
+ *     <li>Ablaufzeit des Tokens in Millisekunden</li>
+ * </ul>
+ *
+ * <p>
+ *     Das Passwort wird selbstverständlich nicht zurückgegeben.
+ *     Der Token wird im {@link #toString()} vollständig maskiert.
+ * </p>
+ *
+ * @author Natascha Blumer
+ * @version 1.0
+ * @since 2025-12-12
+ *
+ * @see com.wiss.backend.controller.AuthController
+ * @see com.wiss.backend.dto.LoginRequestDTO
+ * @see com.wiss.backend.service.JwtService
+ */
 public class LoginResponseDTO {
 
     private final String token;
@@ -38,6 +72,12 @@ public class LoginResponseDTO {
     public String getRole() { return role; }
     public long getExpiresIn() { return expiresIn; }
 
+    /**
+     * Gibt eine textuelle Repräsentation zurück, bei der
+     * der Token aus Sicherheitsgründen nicht angezeigt wird.
+     *
+     * @return Objektbeschreibung mit maskiertem Token
+     */
     @Override
     public String toString() {
         return "LoginResponseDTO{" +

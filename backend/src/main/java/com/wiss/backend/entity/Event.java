@@ -21,7 +21,7 @@ import java.time.LocalDate;
  *
  * @author Natascha Blumer
  * @version 2.0
- * @since 2025-12-11
+ * @since 2025-12-12
  *
  * @see EventCategory Enum mit allen unterstützten Naturereignis-Kategorien
  * @see EventStatus Enum mit allen gültigen Statuswerte für ein Naturereignis
