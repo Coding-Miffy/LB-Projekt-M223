@@ -276,7 +276,6 @@ public class EventController {
             summary = "Events filtern",
             description = "Filtert bestehende Events"
     )
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ApiResponse(responseCode = "200", description = "Events erfolgreich gefiltert")
     @ApiResponse(responseCode = "400", description = "Ungültige Daten übergeben")
     @Tag(name = "Events – Filter", description = "Filterfunktionen für Kategorie, Status, Datum & Kombinationen")
