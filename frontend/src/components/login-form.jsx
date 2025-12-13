@@ -151,7 +151,7 @@ const LoginForm = ({ onLogin } = {}) => {
           id="usernameOrEmail"
           value={usernameOrEmail}
           onChange={handleUsernameOrEmailChange}
-          placeholder="admin oder admin@eonet.com"
+          placeholder="Benutzername oder Email"
           className={getInputClassName(usernameOrEmailError, usernameOrEmail)}
           disabled={isLoading}
         />

@@ -70,24 +70,24 @@ const Account = () => {
             <p><strong>Benutzername:</strong> {user.username}</p>
             <p><strong>Email:</strong> {user.email}</p>
             <p><strong>Rolle:</strong> {user.role}</p>
-            <div style={{ marginTop: '18px' }}>
+            <div className="account-logout">
               <button onClick={handleLogout} className="btn-logout">Logout</button>
             </div>
 
-            <hr style={{ margin: '20px 0' }} />
+            <hr className="account-divider" />
 
             <section>
               <h3>Favoriten</h3>
 
-              <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '12px' }}>
-                <label style={{ fontSize: '14px' }}>Sortiere nach:</label>
+              <div className="favorites-controls">
+                <label className="favorites-label">Sortiere nach:</label>
                 <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
                   <option value="none">Keine</option>
                   <option value="category">Kategorie</option>
                   <option value="date">Datum</option>
                 </select>
 
-                <label style={{ fontSize: '14px' }}>Richtung:</label>
+                <label className="favorites-label">Richtung:</label>
                 <select value={sortDir} onChange={(e) => setSortDir(e.target.value)}>
                   <option value="asc">Aufsteigend</option>
                   <option value="desc">Absteigend</option>
@@ -118,7 +118,7 @@ const Account = () => {
               )}
 
               {sortedFavorites.length > 3 && (
-                <button onClick={() => setExpanded(!expanded)} style={{ marginTop: '8px' }} className="btn-secondary">
+                <button onClick={() => setExpanded(!expanded)} className="btn-secondary favorites-toggle">
                   {expanded ? 'Weniger anzeigen' : `Mehr anzeigen (${sortedFavorites.length - 3})`}
                 </button>
               )}
