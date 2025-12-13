@@ -74,7 +74,6 @@ Die **Authentifizierung und Autorisierung** erfolgt mit **Spring Security** und 
 Der Datenbankzugriff erfolgt über **Spring Data JPA** mit **Hibernate** als ORM. Als Produktivdatenbank wird **PostgreSQL** verwendet, während für automatisierte Tests eine **H2 In-Memory-Datenbank** eingesetzt wird. Der Build-Prozess wird mit **Maven** gesteuert. Zusätzlich ermöglicht **Springdoc OpenAPI** eine übersichtliche Dokumentation der REST-Schnittstellen. Backend- und Security-Tests werden mit **Spring Boot Test** und **Spring Security Test** umgesetzt.
 
 ## Frontend
-tbd
 
 ### Component-Hierarchie-Diagramm
 - [Zum Component-Hierarchie-Diagramm](/resources/component-architecture-diagram.jpg)
@@ -83,9 +82,8 @@ tbd
 tbd  
 [Diagramm]
 
-### API-Integration-Diagramm
-tbd  
-[Diagramm]
+### API-Integration-Diagramm 
+- [Zum API-Integration-Diagramm](/resources/api-integration-diagram.jpg)
 
 ### Technologie-Stack
 
