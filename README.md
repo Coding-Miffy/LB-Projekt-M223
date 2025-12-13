@@ -92,7 +92,7 @@ tbd
 
 | Technologie               | Version        | Verwendung                                     |
 |:--------------------------|:--------------:|:--------------------------------------------- |
-| TypeScript                | -              | Typisierte Programmiersprache für das Frontend (implizit unterstützt durch @types) |
+| JavaScript                | -              | Programmiersprache für das Frontend           |
 | React                     | 19.x           | Haupt-Framework für die Benutzeroberfläche     |
 | React Router DOM          | 7.x            | Client-seitiges Routing                        |
 | Axios                     | 1.x            | HTTP-Client zur API-Kommunikation              |
